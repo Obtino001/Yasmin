@@ -1,0 +1,161 @@
+<div class="menu-variant-container">
+  <h2 class="menu-variant-title">Hoeveel dagen per week?</h2>
+  <p class="menu-variant-subtitle">Kies voor hoeveel dagen per week je maaltijden wilt ontvangen.</p>
+
+  <menu-variant id="block-{{ block.id }}" {{ block.shopify_attributes }}>
+    <label for="menu_variant_5" class="mb-tile">
+      <input type="radio" id="menu_variant_5" name="menu[variant]" value="5" checked class="visually-hidden" />
+      <span class="mb-tile-number">5</span>
+      <span class="mb-tile-label">Duur</span>
+    </label>
+
+    <label for="menu_variant_6" class="mb-tile">
+      <input type="radio" id="menu_variant_6" name="menu[variant]" value="6" class="visually-hidden" />
+      <span class="mb-tile-number">6</span>
+      <span class="mb-tile-label">Duur</span>
+    </label>
+
+    <label for="menu_variant_7" class="mb-tile">
+      <input type="radio" id="menu_variant_7" name="menu[variant]" value="7" class="visually-hidden" />
+      <span class="mb-tile-number">7</span>
+      <span class="mb-tile-label">Duur</span>
+    </label>
+  </menu-variant>
+</div>
+
+{% javascript %}
+class MenuVariant extends HTMLElement {
+  constructor() {
+    const element = super();
+    this.element = element;
+
+    this.inputs = this.element.querySelectorAll("input[type=\"radio\"]");
+  }
+
+  connectedCallback() {
+    this.inputs.forEach(inputEl => {
+      inputEl.addEventListener("change", this.#onChange.bind(this));
+    });
+  }
+
+  disconnectedCallback() {
+    this.inputs.forEach(inputEl => {
+      inputEl.removeEventListener("change", this.#onChange);
+    });
+  }
+
+  #onChange(event) { 
+    event.stopPropagation(); 
+    const value = event.currentTarget.value;
+
+    this.element.setAttribute("value", value);
+    this.element.dispatchEvent(new CustomEvent("change", { detail: { value } }));
+  }
+
+  get value() {
+    return this.element.getAttribute("value");
+  }
+}
+
+customElements.define('menu-variant', MenuVariant);
+{% endjavascript %}
+
+{% stylesheet %}
+/* New Container Styles for Titles */
+.menu-variant-container {
+  font-family: inherit;
+  margin: 24px 0;
+}
+
+.menu-variant-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #041530; /* Dark navy matching image */
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+.menu-variant-subtitle {
+  font-size: 16px;
+  color: #8b95a5;
+  margin: 0 0 20px 0;
+}
+
+/* Updated Variant Tile Styles */
+menu-variant {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+menu-variant .mb-tile {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 105px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.mb-tile-number {
+  font-size: 26px;
+  font-weight: 800;
+  color: #041530;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.mb-tile-label {
+  font-size: 14px;
+  color: #8b95a5;
+  font-weight: 400;
+}
+
+menu-variant .mb-tile:hover {
+  border-color: #5541c8;
+  transform: translateY(-2px);
+}
+
+/* Checked State Styles */
+menu-variant .mb-tile:has(input[type="radio"]:checked) {
+  background: #5541c8; /* Purple matching the image */
+  border-color: #5541c8;
+  box-shadow: 0 4px 12px rgba(85, 65, 200, 0.15);
+}
+
+menu-variant .mb-tile:has(input[type="radio"]:checked) .mb-tile-number {
+  color: #ffffff;
+}
+
+menu-variant .mb-tile:has(input[type="radio"]:checked) .mb-tile-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Hidden input class if your theme doesn't already have it */
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "t:menu-variant.name",
+    "settings": [],
+    "presets": [
+      { "name": "t:menu-variant.name" }
+    ]
+  }
+{% endschema %}

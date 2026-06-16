@@ -339,6 +339,27 @@
   </head>
 
   <body class="cu--{{ template.name }} gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+{%- comment -%} yasemin-moving-banner START — verwijder dit hele blok om de actiebanner weg te halen {%- endcomment -%}
+<div class="ym-moving-bar" role="region" aria-label="Actie">
+  <a href="/discount/MOVING20?redirect=/collections/all" class="ym-moving-bar__link">
+  {%- assign ymloc = request.locale.iso_code -%}
+  {%- case ymloc -%}
+    {%- when 'nl' -%}🏡 We verhuizen naar een grotere keuken! Gebruik code <strong>MOVING20</strong> voor <strong>20% korting</strong>. Bestel nu →
+    {%- when 'de' -%}🏡 Wir ziehen in eine größere Küche! Mit dem Code <strong>MOVING20</strong> gibt es <strong>20% Rabatt</strong>. Jetzt bestellen →
+    {%- when 'fr' -%}🏡 Nous emménageons dans une plus grande cuisine ! Avec le code <strong>MOVING20</strong>, profitez de <strong>-20%</strong>. Commander →
+    {%- when 'tr' -%}🏡 Daha büyük bir mutfağa taşınıyoruz! <strong>MOVING20</strong> koduyla <strong>%20 indirim</strong>. Sipariş ver →
+    {%- else -%}🏡 We're moving to a bigger kitchen! Use code <strong>MOVING20</strong> for <strong>20% off</strong> your order. Order now →
+  {%- endcase -%}
+  </a>
+</div>
+<style>
+.ym-moving-bar{background:#1d1d2e;color:#fff;text-align:center;padding:10px 16px;font-size:14px;line-height:1.45}
+.ym-moving-bar__link{color:#fff!important;text-decoration:none;font-weight:500}
+.ym-moving-bar__link:hover{text-decoration:underline}
+.ym-moving-bar strong{font-weight:700}
+{%- comment -%} yasemin-moving-banner END {%- endcomment -%}
+</style>
+
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
