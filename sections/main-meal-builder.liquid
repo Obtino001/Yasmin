@@ -34,7 +34,7 @@
 .mb-modal__dish-tag:nth-child(1) {
     background:#E4F2D8;
     color:#4E7B2D;
-}
+}z
 .mb-summary__total * {
     font-weight: 800;
 font-family: Barlow, sans-serif;
@@ -2266,6 +2266,19 @@ label.mb-sub-card {
         .then((parsedState) => {
           const addedText = this.dataset.addedText || 'Added to Cart!';
           btn.textContent = addedText;
+          
+          let discountCode = '';
+          if (this.state.duration === 12) {
+             discountCode = '12WEEKS_PLAN';
+          } else if (this.state.duration === 24) {
+             discountCode = '24WEEKS_PLAN';
+          }
+
+          if (discountCode !== '') {
+             window.location.href = `/checkout?discount=${discountCode}`;
+             return;
+          }
+
           const cartDrawer = document.querySelector('cart-drawer');
           if (cartDrawer && parsedState.sections) {
              cartDrawer.renderContents(parsedState);
