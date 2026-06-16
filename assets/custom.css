@@ -2698,10 +2698,12 @@ delivery-picker[loading="true"] {
 }
 
 .delivery-select-wrapper {
-  background-color: var(--dp-light-purple);
-  border-right: 1.5px solid var(--dp-border-purple);
+  position: relative;
   display: flex;
   align-items: center;
+  border-right: 1px solid var(--color-border);
+  background-color: var(--color-primary-light);
+  max-width: 100px;
 }
 
 .delivery-select-wrapper select {

@@ -143,21 +143,68 @@
 
   <div class="custom-faq-grid__container">
     <div class="custom-faq-grid__grid">
-      {%- for block in section.blocks -%}
-        <div class="custom-faq-grid__item" {{ block.shopify_attributes }}>
-          {%- if block.settings.title != blank -%}
-            <h3 class="custom-faq-grid__item-title">{{ block.settings.title | escape }}</h3>
-          {%- endif -%}
-          {%- if block.settings.text != blank -%}
-            <div class="custom-faq-grid__item-content rte">
-              {{ block.settings.text }}
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
+      {%- if collection.metafields.custom.faq != blank -%}
+        {%- for faq_item in collection.metafields.custom.faq.value -%}
+          <div class="custom-faq-grid__item">
+            {%- if faq_item.question != blank -%}
+              <h3 class="custom-faq-grid__item-title">{{ faq_item.question }}</h3>
+            {%- endif -%}
+            {%- if faq_item.answer != blank -%}
+              <div class="custom-faq-grid__item-content rte">
+                {{ faq_item.answer | metafield_tag }}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}
+          <div class="custom-faq-grid__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h3 class="custom-faq-grid__item-title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="custom-faq-grid__item-content rte">
+                {{ block.settings.text }}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- if collection.metafields.custom.faq != blank -%}
+      {%- for faq_item in collection.metafields.custom.faq.value -%}
+        {
+          "@type": "Question",
+          "name": {{ faq_item.question | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ faq_item.answer | strip_html | json }}
+          }
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for block in section.blocks -%}
+        {
+          "@type": "Question",
+          "name": {{ block.settings.title | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ block.settings.text | strip_html | json }}
+          }
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    {%- endif -%}
+  ]
+}
+</script>
 
 {% schema %}
 {

@@ -1274,34 +1274,34 @@ label.mb-sub-card {
           <line x1="3" y1="10" x2="21" y2="10"></line>
         </svg>
       </div>
-      <h3 class="mb-confirm-modal__title">{{ section.settings.confirm_plan_title_prefix | default: "For your" }} <span id="mb-confirm-plan-weeks">12</span>{{ section.settings.confirm_plan_title_suffix | default: "-week plan" }}</h3>
-      <p class="mb-confirm-modal__subtitle">{{ section.settings.confirm_plan_subtitle | default: "Here's how your weekly selections work" }}</p>
+      <h3 class="mb-confirm-modal__title">{{ 'sections.meal_builder.title_prefix' | t }} <span id="mb-confirm-plan-weeks">12</span>{{ 'sections.meal_builder.title_suffix' | t }}</h3>
+      <p class="mb-confirm-modal__subtitle">{{ 'sections.meal_builder.subtitle' | t }}</p>
     </div>
     <div class="mb-confirm-modal__body">
       <ul class="mb-confirm-modal__steps">
         <li class="mb-confirm-modal__step">
           <div class="mb-confirm-modal__step-icon">📋</div>
           <div class="mb-confirm-modal__step-text">
-            {{ section.settings.confirm_plan_step1 | default: "<strong>You'll select boxes for the first 4 weeks now.</strong>" }}
+            {{ 'sections.meal_builder.step1' | t }}
           </div>
         </li>
         <li class="mb-confirm-modal__step">
           <div class="mb-confirm-modal__step-icon">🔄</div>
           <div class="mb-confirm-modal__step-text">
-            {{ section.settings.confirm_plan_step2 | default: "Your choices for the remaining weeks <strong>can be updated in your account</strong>." }}
+            {{ 'sections.meal_builder.step2' | t }}
           </div>
         </li>
         <li class="mb-confirm-modal__step">
           <div class="mb-confirm-modal__step-icon">✨</div>
           <div class="mb-confirm-modal__step-text">
-            {{ section.settings.confirm_plan_step3 | default: "Or your <strong>week 4 selections will automatically repeat</strong>." }}
+            {{ 'sections.meal_builder.step3' | t }}
           </div>
         </li>
       </ul>
     </div>
     <div class="mb-confirm-modal__footer">
-      <button type="button" class="mb-confirm-modal__confirm-btn" id="mb-confirm-proceed">{{ section.settings.confirm_plan_btn_proceed | default: "Got it — Place Order" }}</button>
-      <button type="button" class="mb-confirm-modal__cancel-btn" id="mb-confirm-cancel">{{ section.settings.confirm_plan_btn_cancel | default: "Go back" }}</button>
+      <button type="button" class="mb-confirm-modal__confirm-btn" id="mb-confirm-proceed">{{ 'sections.meal_builder.btn_proceed' | t }}</button>
+      <button type="button" class="mb-confirm-modal__cancel-btn" id="mb-confirm-cancel">{{ 'sections.meal_builder.btn_cancel' | t }}</button>
     </div>
   </dialog>
 

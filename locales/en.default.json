@@ -686,6 +686,16 @@
       "presets": {
         "name": "Promo Banner"
       }
+    },
+    "meal_builder": {
+      "title_prefix": "Für Ihren",
+      "title_suffix": "-Wochen-Plan",
+      "subtitle": "So funktionieren Ihre wöchentlichen Auswahlen",
+      "step1": "<strong>Sie wählen jetzt Boxen für die ersten 4 Wochen aus.</strong>",
+      "step2": "Ihre Auswahlen für die verbleibenden Wochen <strong>können in Ihrem Konto aktualisiert werden</strong>.",
+      "step3": "Oder Ihre <strong>Auswahlen von Woche 4 wiederholen sich automatisch</strong>.",
+      "btn_proceed": "Verstanden — Bestellung aufgeben",
+      "btn_cancel": "Zurück"
     }
   },
   "localization": {
