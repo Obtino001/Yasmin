@@ -780,6 +780,7 @@ label.mb-sub-card {
             <img decoding="async" loading="lazy" id="current_country_flag" src="" alt="Flag" width="20" height="14" style="border-radius:2px; object-fit:cover; margin-left: 1rem; display: none;">
             <label for="delivery_zone_country" class="visually-hidden">{{ "sections.delivery-picker.labels.country" | t }}</label>
            <select id="delivery_zone_country" name="delivery_zone[country]" required>
+              <option value="" disabled selected>{{ "sections.delivery-picker.labels.select_country" | t | default: "Country" }}</option>
               {% for block in section.blocks %}
                 {% if block.type == 'delivery_country' %}
                   <option value="{{ block.settings.country_code | default: block.settings.country_name }}">
@@ -970,8 +971,8 @@ label.mb-sub-card {
                   <div class="mb-sub-radio"></div>
                   
                   {%- comment -%} Chef's Box vs Pick & Mix Switch (only shown for subscription plans > 1 week) {%- endcomment -%}
-                  {% assign weeks_num = block.settings.weeks | plus: 0 %}
-                  {% if weeks_num == 12 or weeks_num == 24 %}
+                  {% assign weeks_str = block.settings.weeks | downcase %}
+                  {% if weeks_str contains '12' or weeks_str contains '24' %}
                     <div class="mb-sub-card__extra-buttons">
                       <button type="button" class="btn-chef is-selected">{{ section.settings.label_chefs_box | default: "Meal boxes" }}</button>
                       <a href="{{ section.settings.pick_and_mix_url | default: 'https://yasemin.nl/products/pick-mix-menu' }}" class="btn-pick">
@@ -1454,9 +1455,9 @@ label.mb-sub-card {
 
         // Map weeks to their expected duration and discount percentage values
         const durationSpecs = {
-          4: { duration: 4, discount: 7, exclude: [12, 20, 24, 25] },
-          12: { duration: 12, discount: 20, exclude: [24, 25] },
-          24: { duration: 24, discount: 25, exclude: [12, 20] }
+          4: { duration: 4, discount: 7, exclude: [12, 24] },
+          12: { duration: 12, discount: 20, exclude: [4, 24] },
+          24: { duration: 24, discount: 25, exclude: [4, 12] }
         };
 
         const spec = durationSpecs[weeksNum] || { duration: weeksNum, discount: null, exclude: [] };

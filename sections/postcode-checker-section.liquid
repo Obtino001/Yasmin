@@ -67,6 +67,7 @@
             <img decoding="async" loading="lazy" id="current_country_flag" src="" alt="Flag" width="20" height="14" style="border-radius:2px; object-fit:cover; margin-left: 1rem; display: none;">
             <label for="delivery_zone_country" class="visually-hidden">{{ "sections.delivery-picker.labels.country" }}</label>
            <select id="delivery_zone_country" name="delivery_zone[country]" required>
+              <option value="" disabled selected>{{ "sections.delivery-picker.labels.select_country" | t | default: "Country" }}</option>
               {% for block in section.blocks %}
                 {% if block.type == 'delivery_country' %}
                   <option value="{{ block.settings.country_code | default: block.settings.country_name }}">

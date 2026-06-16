@@ -14,10 +14,7 @@
       <link rel="canonical" href="{{ shop.url }}{{ request.path }}">
     {%- endif -%}
 
-    {%- for locale in shop.published_locales -%}
-      <link rel="alternate" hreflang="{{ locale.iso_code }}" href="{{ shop.url }}{{ locale.root_url }}{{ request.path | remove_first: locale.root_url }}" />
-    {%- endfor -%}
-    <link rel="alternate" hreflang="x-default" href="{{ shop.url }}{{ request.path }}" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">

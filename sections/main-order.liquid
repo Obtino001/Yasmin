@@ -55,8 +55,27 @@
                 data-label="{{ 'customer.order.product' | t }}"
               >
                 <div>
-                  {%- if line_item.url != blank -%}
-                    <a href="{{ line_item.url }}">{{ line_item.title | escape }}</a>
+                  {%- assign item_url = line_item.url -%}
+                  {%- if line_item.product.handle == 'chefs-menu' or line_item.product.handle == 'pick-mix-menu' -%}
+                    {%- assign btn_days = line_item.variant.title | split: ' ' | first -%}
+                    {%- assign btn_people = line_item.quantity -%}
+                    {%- assign btn_duration = 1 -%}
+                    {%- if line_item.selling_plan_allocation -%}
+                      {%- assign plan_name = line_item.selling_plan_allocation.selling_plan.name | downcase -%}
+                      {%- if plan_name contains '4' -%}{%- assign btn_duration = 4 -%}{%- endif -%}
+                      {%- if plan_name contains '12' -%}{%- assign btn_duration = 12 -%}{%- endif -%}
+                      {%- if plan_name contains '24' -%}{%- assign btn_duration = 24 -%}{%- endif -%}
+                    {%- endif -%}
+                    {%- assign item_url = '/products/' | append: line_item.product.handle | append: '?days=' | append: btn_days | append: '&people=' | append: btn_people | append: '&duration=' | append: btn_duration -%}
+                  {%- endif -%}
+
+                  {%- if item_url != blank -%}
+                    <a href="{{ item_url }}">{{ line_item.title | escape }}</a>
+                    {%- if line_item.product.handle == 'chefs-menu' or line_item.product.handle == 'pick-mix-menu' -%}
+                      <br><a href="{{ item_url }}" class="button button--secondary" style="margin-top: 10px; padding: 5px 15px; min-height: unset; font-size: 1.2rem;">
+                        Buy again / Modify
+                      </a>
+                    {%- endif -%}
                   {%- else -%}
                     <p>{{ line_item.title | escape }}</p>
                   {%- endif -%}
