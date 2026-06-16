@@ -91,7 +91,7 @@
       </div>
 
       <div class="delivery-zones {% if delivery_date == blank %} visually-hidden {% endif %}">
-        {% assign max_days = section.settings.max_days_ahead | default: 21 %}
+        {% assign max_days = section.settings.max_days_ahead | default: 7 %}
         {% for i in (2..max_days) %}
           {% assign offset_seconds = i | times: 86400 %}
           {% assign future_timestamp = "now" | date: "%s" | plus: offset_seconds %}
@@ -195,11 +195,11 @@
       "type": "range",
       "id": "max_days_ahead",
       "label": "t:delivery-picker.labels.max_days_ahead",
-      "min": 7,
+      "min": 2,
       "max": 60,
       "step": 1,
       "unit": "day",
-      "default": 21
+      "default": 7
     },
     {
       "type": "checkbox",

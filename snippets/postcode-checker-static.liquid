@@ -87,7 +87,7 @@
       </div>
 
       <div class="delivery-zones {% if delivery_date == blank %} visually-hidden {% endif %}">
-        {% assign max_days = section.settings.max_days_ahead | default: 21 %}
+        {% assign max_days = section.settings.max_days_ahead | default: 7 %}
         {% for i in (2..max_days) %}
           {% assign offset_seconds = i | times: 86400 %}
           {% assign future_timestamp = "now" | date: "%s" | plus: offset_seconds %}
