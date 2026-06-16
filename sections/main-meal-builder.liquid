@@ -2267,18 +2267,6 @@ label.mb-sub-card {
           .then((parsedState) => {
             const addedText = this.dataset.addedText || 'Added to Cart!';
             btn.textContent = addedText;
-            
-            let discountCode = '';
-            if (this.state.duration === 12) {
-               discountCode = '12WEEKS_PLAN';
-            } else if (this.state.duration === 24) {
-               discountCode = '24WEEKS_PLAN';
-            }
-
-            if (discountCode !== '') {
-               window.location.href = `/checkout?discount=${discountCode}`;
-               return;
-            }
 
             const cartDrawer = document.querySelector('cart-drawer');
             if (cartDrawer && parsedState.sections) {
@@ -2299,13 +2287,16 @@ label.mb-sub-card {
           });
         };
 
-        if (this.state.duration !== 12 && this.state.duration !== 24) {
+        if (this.state.duration === 12 || this.state.duration === 24) {
+           let discountCode = this.state.duration === 12 ? '12WEEKS_PLAN' : '24WEEKS_PLAN';
+           fetch(`/discount/${discountCode}`).then(() => {
+             addItemsToCart();
+           }).catch(() => addItemsToCart());
+        } else {
            // Clear any stuck 12/24 week discount codes from the user's session
            fetch('/discount/CLEAR_STUCK_DISCOUNT').then(() => {
              addItemsToCart();
            }).catch(() => addItemsToCart());
-        } else {
-           addItemsToCart();
         }
       }
     });
