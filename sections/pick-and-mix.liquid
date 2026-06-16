@@ -1129,7 +1129,7 @@ pick-and-mix-error {
               const input = card.querySelector('input');
               if (input) input.checked = true;
               this.state.duration = card.dataset.value;
-              this.state.planId = parseInt(card.dataset.planId);
+              this.onPlanParamsChange();
               this.updateUI();
             });
           });

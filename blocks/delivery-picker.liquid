@@ -33,6 +33,7 @@
             <div class="input-col country-col">
               <label for="delivery_zone_country" class="visually-hidden">{{ "sections.delivery-picker.labels.country" }}</label>
               <select id="delivery_zone_country" name="delivery_zone[country]" class="custom-select" required>
+                <option value="" disabled selected>Land</option>
                 <option value="NL">NL</option>
                 <option value="BE">BE</option>
                 <option value="DE">DE</option>
@@ -431,6 +432,10 @@ class DeliveryPicker extends HTMLElement {
     });
 
     const zipCodeFromCache = localStorage.getItem("delivery-picker:zip-code");
+    const countryFromCache = localStorage.getItem("delivery-picker:country");
+    if (countryFromCache) {
+      this.countryEl.value = countryFromCache;
+    }
     if (zipCodeFromCache && !this.zipCode) {
       this.zipCode = zipCodeFromCache;
       this.zipCodeEl.value = zipCodeFromCache;
@@ -492,6 +497,10 @@ class DeliveryPicker extends HTMLElement {
 
   #handleFormSubmission(event) {
     event.preventDefault();
+    if (!this.countryEl.value) {
+      return; // Handled by HTML5 required attribute, but just in case
+    }
+    localStorage.setItem("delivery-picker:country", this.countryEl.value);
     this.zipCode = this.zipCodeEl.value;
   }
 

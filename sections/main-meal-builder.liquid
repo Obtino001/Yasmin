@@ -1424,7 +1424,17 @@ label.mb-sub-card {
         // Load the selling plans data map emitted by Liquid.
         try {
           const spDataEl = document.getElementById('mb-selling-plans-data');
-          this._sellingPlansData = spDataEl ? JSON.parse(spDataEl.textContent) : {};
+          if (spDataEl) {
+            const arr = JSON.parse(spDataEl.textContent);
+            this._sellingPlansData = {};
+            arr.forEach(item => {
+              if (!this._sellingPlansData[item.planName]) this._sellingPlansData[item.planName] = {};
+              if (!this._sellingPlansData[item.planName][item.variantTitle]) this._sellingPlansData[item.planName][item.variantTitle] = {};
+              this._sellingPlansData[item.planName][item.variantTitle][item.productId] = item.planId;
+            });
+          } else {
+            this._sellingPlansData = {};
+          }
         } catch(e) {
           this._sellingPlansData = {};
         }
@@ -1781,14 +1791,7 @@ label.mb-sub-card {
               let linkUrl = label.dataset.link;
               const parsedValue = parseInt(label.dataset.value, 10);
 
-              // Simple URL redirect for 12/24 weeks to Chef's Menu
-              if (stateKey === 'duration' && (parsedValue === 12 || parsedValue === 24)) {
-                e.preventDefault();
-                e.stopPropagation();
-                linkUrl = "/products/chefs-menu";
-                 this.loadPageViaAjax(`${linkUrl}?duration=${parsedValue}&people=${this.state.people}&days=${this.state.days}`);
-                return;
-              }
+
 
               labels.forEach(l => l.classList.remove('is-active'));
               label.classList.add('is-active');
@@ -2302,11 +2305,8 @@ label.mb-sub-card {
   This is built from actual selling_plan_allocations on each product variant.
 {%- endcomment -%}
 <script type="application/json" id="mb-selling-plans-data">
-  {
+  [
     {%- assign sp_first_plan = true -%}
-    {%- assign sp_plan_names = ',' -%}
-
-    {%- comment -%} Gather all products from tabs and collection {%- endcomment -%}
     {%- assign sp_products_list = '' -%}
     {%- if section.settings.default_product != blank -%}
       {%- assign sp_products_list = sp_products_list | append: section.settings.default_product.handle | append: ',' -%}
@@ -2342,49 +2342,19 @@ label.mb-sub-card {
         {%- assign sp_product = all_products[sp_handle] -%}
         {%- for sp_variant in sp_product.variants -%}
           {%- for sp_alloc in sp_variant.selling_plan_allocations -%}
-            {%- assign sp_plan = sp_alloc.selling_plan -%}
-            {%- assign sp_plan_key = sp_plan.name | handleize -%}
-            {%- assign lookup_token = ',' | append: sp_plan_key | append: ',' -%}
-            {%- unless sp_plan_names contains lookup_token -%}
-              {%- unless sp_first_plan -%},{%- endunless -%}
-              {{ sp_plan.name | json }}: {
-                {%- assign sp_first_var_in_plan = true -%}
-                {%- for sp_var2 in sp_product.variants -%}
-                  {%- for sp_alloc2 in sp_var2.selling_plan_allocations -%}
-                    {%- if sp_alloc2.selling_plan.name == sp_plan.name -%}
-                      {%- unless sp_first_var_in_plan -%},{%- endunless -%}
-                      {{ sp_var2.title | json }}: {
-                        {%- assign sp_first_prod_in_var = true -%}
-                        {%- for sp_handle2 in sp_products_handles -%}
-                          {%- if sp_handle2 != blank -%}
-                            {%- assign sp_product2 = all_products[sp_handle2] -%}
-                            {%- for sp_alloc3 in sp_product2.variants -%}
-                              {%- if sp_alloc3.title == sp_var2.title -%}
-                                {%- for sp_alloc4 in sp_alloc3.selling_plan_allocations -%}
-                                  {%- if sp_alloc4.selling_plan.name == sp_plan.name -%}
-                                    {%- unless sp_first_prod_in_var -%},{%- endunless -%}
-                                    {{ sp_product2.id | json }}: {{ sp_alloc4.selling_plan.id | json }}
-                                    {%- assign sp_first_prod_in_var = false -%}
-                                  {%- endif -%}
-                                {%- endfor -%}
-                              {%- endif -%}
-                            {%- endfor -%}
-                          {%- endif -%}
-                        {%- endfor -%}
-                      }
-                      {%- assign sp_first_var_in_plan = false -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                {%- endfor -%}
-              }
-              {%- assign sp_plan_names = sp_plan_names | append: sp_plan_key | append: ',' -%}
-              {%- assign sp_first_plan = false -%}
-            {%- endunless -%}
+            {%- unless sp_first_plan -%},{%- endunless -%}
+            {
+              "planName": {{ sp_alloc.selling_plan.name | json }},
+              "variantTitle": {{ sp_variant.title | json }},
+              "productId": {{ sp_product.id | json }},
+              "planId": {{ sp_alloc.selling_plan.id | json }}
+            }
+            {%- assign sp_first_plan = false -%}
           {%- endfor -%}
         {%- endfor -%}
       {%- endif -%}
     {%- endfor -%}
-  }
+  ]
 </script>
 
 <script type="application/json" id="mb-products-data">
