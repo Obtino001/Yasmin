@@ -2703,7 +2703,7 @@ delivery-picker[loading="true"] {
   align-items: center;
   border-right: 1px solid var(--color-border);
   background-color: var(--color-primary-light);
-  max-width: 100px;
+
 }
 
 .delivery-select-wrapper select {
