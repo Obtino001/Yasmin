@@ -1867,7 +1867,14 @@ label.mb-sub-card {
               let linkUrl = label.dataset.link;
               const parsedValue = parseInt(label.dataset.value, 10);
 
-
+              // Redirect 12/24 weeks to Chef's Menu
+              if (stateKey === 'duration' && (parsedValue === 12 || parsedValue === 24)) {
+                e.preventDefault();
+                e.stopPropagation();
+                linkUrl = "/products/chefs-menu";
+                window.location.href = `${linkUrl}?duration=${parsedValue}&people=${this.state.people}&days=${this.state.days}`;
+                return;
+              }
 
               labels.forEach(l => l.classList.remove('is-active'));
               label.classList.add('is-active');

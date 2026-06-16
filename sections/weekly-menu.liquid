@@ -167,6 +167,11 @@ class WeeklyMenu extends HTMLElement {
   #onDurationChange(event) {
     this.duration = event.detail.value;
 
+    if (this.duration == 12 || this.duration == 24) {
+      window.location.href = `/products/chefs-menu?duration=${this.duration}&people=${this.people}&days=${this.days}`;
+      return;
+    }
+
     this.weeklyMenuChoices.forEach(weeklyMenuChoice => {
       if (weeklyMenuChoice.week <= this.duration) {
         weeklyMenuChoice.show();
