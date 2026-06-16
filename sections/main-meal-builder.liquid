@@ -2250,54 +2250,63 @@ label.mb-sub-card {
           itemsToAdd.push(item);
         });
 
-        const addItemsToCart = () => {
-          fetch(window.Shopify.routes.root + 'cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              items: itemsToAdd,
-              sections: document.querySelector('cart-drawer') ? 'cart-drawer,cart-icon-bubble' : undefined,
-              sections_url: window.location.pathname
-            })
-          })
-          .then(response => {
-            if(!response.ok) throw new Error('Error adding to cart');
-            return response.json();
-          })
-          .then((parsedState) => {
+        const addItemsToCart = async () => {
+          try {
+            // 1. Clear cart to prevent mixing old 24/12 week items and messing up discounts
+            await fetch(window.Shopify.routes.root + 'cart/clear.js', { method: 'POST' });
+
+            // 2. Add new items
+            const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                items: itemsToAdd,
+                sections: document.querySelector('cart-drawer') ? 'cart-drawer,cart-icon-bubble' : undefined,
+                sections_url: window.location.pathname
+              })
+            });
+            
+            if (!response.ok) throw new Error('Error adding to cart');
+            const parsedState = await response.json();
+
             const addedText = this.dataset.addedText || 'Added to Cart!';
             btn.textContent = addedText;
 
-            const cartDrawer = document.querySelector('cart-drawer');
-            if (cartDrawer && parsedState.sections) {
-               cartDrawer.renderContents(parsedState);
-            } else {
-               window.location.href = window.Shopify.routes.root + 'cart';
+            // 3. Apply Discount and Redirect/Open Cart
+            let discountCode = '';
+            if (this.state.duration === 12) {
+               discountCode = '12WEEKS_PLAN';
+            } else if (this.state.duration === 24) {
+               discountCode = '24WEEKS_PLAN';
             }
-            setTimeout(() => { 
-              btn.textContent = btn.dataset.defaultText || 'Place Order'; 
-              btn.disabled = false; 
-            }, 2000);
-          })
-          .catch(error => {
+
+            if (discountCode !== '') {
+               // Force checkout with discount to guarantee it overrides any previous codes
+               window.location.href = `/checkout?discount=${discountCode}`;
+            } else {
+               // For 4-week plans, clear any stuck discounts with cache busting, then open drawer
+               await fetch(`/discount/CLEAR_STUCK_DISCOUNT?_t=${Date.now()}`);
+               
+               const cartDrawer = document.querySelector('cart-drawer');
+               if (cartDrawer && parsedState.sections) {
+                 cartDrawer.renderContents(parsedState);
+                 setTimeout(() => { 
+                   btn.textContent = btn.dataset.defaultText || 'Place Order'; 
+                   btn.disabled = false; 
+                 }, 2000);
+               } else {
+                 window.location.href = window.Shopify.routes.root + 'cart';
+               }
+            }
+          } catch (error) {
             console.error('Cart error:', error);
             const errorTextMsg = this.dataset.errorText || 'Error — try again';
             btn.textContent = errorTextMsg;
             setTimeout(() => { btn.textContent = btn.dataset.defaultText || 'Place Order'; btn.disabled = false; }, 3000);
-          });
+          }
         };
 
-        if (this.state.duration === 12 || this.state.duration === 24) {
-           let discountCode = this.state.duration === 12 ? '12WEEKS_PLAN' : '24WEEKS_PLAN';
-           fetch(`/discount/${discountCode}`).then(() => {
-             addItemsToCart();
-           }).catch(() => addItemsToCart());
-        } else {
-           // Clear any stuck 12/24 week discount codes from the user's session
-           fetch('/discount/CLEAR_STUCK_DISCOUNT').then(() => {
-             addItemsToCart();
-           }).catch(() => addItemsToCart());
-        }
+        addItemsToCart();
       }
     });
   }
