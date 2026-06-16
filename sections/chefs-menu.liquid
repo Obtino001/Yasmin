@@ -1500,7 +1500,11 @@ label.mb-sub-card {
           // If a specific product is requested, look it up directly
           if (productId !== null) {
             const pid = productId.toString();
-            if (productMap[pid] !== undefined) return parseInt(productMap[pid], 10);
+            if (productMap[pid] !== undefined) {
+              const entry = productMap[pid];
+              if (typeof entry === 'object' && entry.id !== undefined) return parseInt(entry.id, 10);
+              return parseInt(entry, 10);
+            }
             continue;
           }
 
@@ -1817,7 +1821,13 @@ label.mb-sub-card {
 
             const isChefs = btn.classList.contains('btn-chef');
             if (!isChefs) {
+              e.preventDefault();
               e.stopPropagation();
+              const url = new URL(btn.href, window.location.origin);
+              url.searchParams.set('duration', this.state.duration);
+              url.searchParams.set('people', this.state.people);
+              url.searchParams.set('days', this.state.days);
+              window.location.href = url.toString();
               return;
             }
 
