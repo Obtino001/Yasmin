@@ -16,22 +16,27 @@ class CartCoupon extends HTMLElement {
 
     this.toggleLoading(true);
 
-    fetch(`${window.routes.cart_update_url || '/cart/update.js'}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ discount: code })
-    })
-    .then(response => response.json())
-    .then(cart => {
-      this.refreshCart();
-    })
-    .catch(error => {
-      console.error('Error applying discount:', error);
-      this.toggleLoading(false, true);
-    });
+    const checkoutForm = document.getElementById('CartDrawer-Form') || document.querySelector('form[action="/cart"]');
+    if (checkoutForm) {
+      let discountInput = checkoutForm.querySelector('input[name="discount"]');
+      if (!discountInput) {
+        discountInput = document.createElement('input');
+        discountInput.type = 'hidden';
+        discountInput.name = 'discount';
+        checkoutForm.appendChild(discountInput);
+      }
+      discountInput.value = code;
+      
+      const checkoutBtn = document.createElement('input');
+      checkoutBtn.type = 'hidden';
+      checkoutBtn.name = 'checkout';
+      checkoutBtn.value = 'Checkout';
+      checkoutForm.appendChild(checkoutBtn);
+      
+      checkoutForm.submit();
+    } else {
+      window.location.href = `/checkout?discount=${encodeURIComponent(code)}`;
+    }
   }
 
   toggleLoading(loading, error = false) {
