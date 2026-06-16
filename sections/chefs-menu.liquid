@@ -1420,8 +1420,21 @@ label.mb-sub-card {
       }
 
       recalculateDiscounts() {
-        const durDiscounts = {1: 0, 4: 0.07, 12: 0.20, 24: 0.25};
-        this.state.durationDiscount = durDiscounts[this.state.duration] || 0;
+        // Duration discount: use actual selling plan prices from Shopify
+        // instead of hardcoded percentages, so cart price matches summary
+        this.state.durationDiscount = 0;
+        this.state.durationDiscountPerUnit = 0;
+        if (this.state.duration > 1 && this._sellingPlansData) {
+          const planPrices = this.getSellingPlanPrices(this.state.duration, this.state.days, this.state.currentProductId);
+          if (planPrices && planPrices.compareAtPrice > 0 && planPrices.price < planPrices.compareAtPrice) {
+            // Store per-unit discount in cents (compareAtPrice and price are already in cents)
+            this.state.durationDiscountPerUnit = planPrices.compareAtPrice - planPrices.price;
+          } else {
+            // Fallback to hardcoded percentages only if no selling plan price data
+            const durDiscounts = {1: 0, 4: 0.07, 12: 0.20, 24: 0.25};
+            this.state.durationDiscount = durDiscounts[this.state.duration] || 0;
+          }
+        }
 
         const pDiscounts = {1: 0, 2: 0.15, 3: 0.20, 4: 0.30};
         this.state.peopleDiscount = pDiscounts[this.state.people] || 0;
@@ -1493,7 +1506,67 @@ label.mb-sub-card {
 
           // Otherwise return the first available plan ID for this variant
           const firstId = Object.values(productMap)[0];
-          if (firstId !== undefined) return parseInt(firstId, 10);
+          if (firstId !== undefined) {
+            if (typeof firstId === 'object' && firstId.id !== undefined) return parseInt(firstId.id, 10);
+            return parseInt(firstId, 10);
+          }
+        }
+
+        return null;
+      }
+
+      /**
+       * Get the selling plan price and compareAtPrice for a given duration/days/product.
+       * Returns { price, compareAtPrice } in cents, or null if not found.
+       */
+      getSellingPlanPrices(durationWeeks, daysCount, productId = null) {
+        if (!this._sellingPlansData) return null;
+        const data = this._sellingPlansData;
+        const daysStr = daysCount.toString();
+        const weeksNum = parseInt(durationWeeks, 10);
+
+        if (weeksNum <= 1) return null;
+
+        const durationSpecs = {
+          4: { duration: 4, discount: 7, exclude: [12, 20, 24, 25] },
+          12: { duration: 12, discount: 20, exclude: [24, 25] },
+          24: { duration: 24, discount: 25, exclude: [12, 20] }
+        };
+
+        const spec = durationSpecs[weeksNum] || { duration: weeksNum, discount: null, exclude: [] };
+
+        for (const planName of Object.keys(data)) {
+          const planNameLower = planName.toLowerCase();
+          const numbers = (planNameLower.match(/\d+/g) || []).map(num => parseInt(num, 10));
+
+          const hasExcluded = spec.exclude.some(ex => numbers.includes(ex));
+          if (hasExcluded) continue;
+
+          const isMatch = numbers.includes(spec.duration) || (spec.discount !== null && numbers.includes(spec.discount));
+          if (!isMatch) continue;
+
+          const variantMap = data[planName];
+          if (!variantMap) continue;
+
+          const variantKey = Object.keys(variantMap).find(title => parseInt(title, 10) === parseInt(daysStr, 10));
+          if (!variantKey) continue;
+
+          const productMap = variantMap[variantKey];
+          if (!productMap) continue;
+
+          if (productId !== null) {
+            const pid = productId.toString();
+            const entry = productMap[pid];
+            if (entry && typeof entry === 'object' && entry.price !== undefined) {
+              return { price: entry.price, compareAtPrice: entry.compareAtPrice };
+            }
+          }
+
+          // Return first available
+          const firstEntry = Object.values(productMap)[0];
+          if (firstEntry && typeof firstEntry === 'object' && firstEntry.price !== undefined) {
+            return { price: firstEntry.price, compareAtPrice: firstEntry.compareAtPrice };
+          }
         }
 
         return null;
@@ -1983,7 +2056,15 @@ label.mb-sub-card {
         }
 
         const peopleDiscAmount = baseBoxTotal * this.state.peopleDiscount;
-        const durationDiscAmount = baseBoxTotal * this.state.durationDiscount;
+        // Use per-unit discount from actual selling plan prices if available
+        let durationDiscAmount;
+        if (this.state.durationDiscountPerUnit > 0) {
+          // durationDiscountPerUnit is per-unit in cents, multiply by people and displayWeeks
+          const displayWeeks = this.state.duration > 1 ? 4 : 1;
+          durationDiscAmount = (this.state.durationDiscountPerUnit / 100) * this.state.people * displayWeeks;
+        } else {
+          durationDiscAmount = baseBoxTotal * this.state.durationDiscount;
+        }
         const totalDiscountAmount = peopleDiscAmount + durationDiscAmount;
         this.state.total = baseBoxTotal - totalDiscountAmount;
 
@@ -2212,7 +2293,7 @@ label.mb-sub-card {
                                 {%- for sp_alloc4 in sp_alloc3.selling_plan_allocations -%}
                                   {%- if sp_alloc4.selling_plan.name == sp_plan.name -%}
                                     {%- unless sp_first_prod_in_var -%},{%- endunless -%}
-                                    "{{ sp_product2.id }}": {{ sp_alloc4.selling_plan.id | json }}
+                                    "{{ sp_product2.id }}": { "id": {{ sp_alloc4.selling_plan.id | json }}, "price": {{ sp_alloc4.price | json }}, "compareAtPrice": {{ sp_alloc4.compare_at_price | json }} }
                                     {%- assign sp_first_prod_in_var = false -%}
                                   {%- endif -%}
                                 {%- endfor -%}
