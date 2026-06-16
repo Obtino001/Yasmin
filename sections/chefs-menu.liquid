@@ -1670,15 +1670,6 @@ label.mb-sub-card {
               let linkUrl = label.dataset.link;
               const parsedValue = parseInt(label.dataset.value, 10);
 
-              // Simple URL redirect for 1/4 weeks to Weekly Menu
-              if (stateKey === 'duration' && (parsedValue === 1 || parsedValue === 4)) {
-                e.preventDefault();
-                e.stopPropagation();
-                linkUrl = this.dataset.pickAndMixUrl || "/pages/wekelijks-menu";
-                this.loadPageViaAjax(`${linkUrl}?duration=${parsedValue}&people=${this.state.people}&days=${this.state.days}`);
-                return;
-              }
-
               labels.forEach(l => l.classList.remove('is-active'));
               label.classList.add('is-active');
               
