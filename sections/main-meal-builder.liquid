@@ -1579,13 +1579,20 @@ label.mb-sub-card {
           const planNameLower = planName.toLowerCase();
           const numbers = (planNameLower.match(/\d+/g) || []).map(num => parseInt(num, 10));
 
-          // Check if the plan contains any of the excluded numbers for other durations
-          const hasExcluded = spec.exclude.some(ex => numbers.includes(ex));
-          if (hasExcluded) continue;
+          // Explicitly check for exact matches first to bypass regex issues
+          if (weeksNum === 12 && (planName === '12WEEKS_PLAN' || planNameLower.includes('12 weeks') || planNameLower.includes('12weken') || planNameLower.includes('12 weken'))) {
+             // force match
+          } else if (weeksNum === 24 && (planName === '24WEEKS_PLAN' || planNameLower.includes('24 weeks') || planNameLower.includes('24weken') || planNameLower.includes('24 weken'))) {
+             // force match
+          } else {
+            // Check if the plan contains any of the excluded numbers for other durations
+            const hasExcluded = spec.exclude.some(ex => numbers.includes(ex));
+            if (hasExcluded) continue;
 
-          // Check if the plan matches our duration or its discount percentage
-          const isMatch = numbers.includes(spec.duration) || (spec.discount !== null && numbers.includes(spec.discount));
-          if (!isMatch) continue;
+            // Check if the plan matches our duration or its discount percentage
+            const isMatch = numbers.includes(spec.duration) || (spec.discount !== null && numbers.includes(spec.discount));
+            if (!isMatch) continue;
+          }
 
           const variantMap = data[planName];
           if (!variantMap) continue;
@@ -2239,8 +2246,7 @@ label.mb-sub-card {
           };
           
           if (this.state.duration > 1) {
-            const resolvedPlanId = this.resolvePlanId(this.state.duration, this.state.days, box.productId)
-              ?? (this.state.planId && !isNaN(parseInt(this.state.planId, 10)) ? parseInt(this.state.planId, 10) : null);
+            let resolvedPlanId = this.resolvePlanId(this.state.duration, this.state.days, box.productId);
 
             if (resolvedPlanId !== null && !isNaN(resolvedPlanId)) {
               item.selling_plan = resolvedPlanId;
