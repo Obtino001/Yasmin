@@ -1546,6 +1546,18 @@ pick-and-mix-error {
           });
           if (!updateResponse.ok) throw new Error("Cart attributes update failed.");
 
+          let discountCode = '';
+          const durStr = String(this.state.duration).toLowerCase();
+          if (durStr.includes('4')) discountCode = '4WEEKS_PLAN';
+          if (durStr.includes('12')) discountCode = '12WEEKS_PLAN';
+          if (durStr.includes('24')) discountCode = '24WEEKS_PLAN';
+
+          if (discountCode) {
+             await fetch(`/discount/${discountCode}`);
+          } else {
+             await fetch('/checkout?clear_discount=1');
+          }
+
           window.location.href = '/checkout';
 
         } catch (err) {

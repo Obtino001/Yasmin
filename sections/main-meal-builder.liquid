@@ -2330,14 +2330,17 @@ label.mb-sub-card {
           });
         };
 
-        if (this.state.duration === 12 || this.state.duration === 24) {
-           let discountCode = this.state.duration === 12 ? '12WEEKS_PLAN' : '24WEEKS_PLAN';
+        let discountCode = '';
+        if (this.state.duration === 4) discountCode = '4WEEKS_PLAN';
+        if (this.state.duration === 12) discountCode = '12WEEKS_PLAN';
+        if (this.state.duration === 24) discountCode = '24WEEKS_PLAN';
+
+        if (discountCode) {
            fetch(`/discount/${discountCode}`).then(() => {
              addItemsToCart();
            }).catch(() => addItemsToCart());
         } else {
-           // Clear any stuck 12/24 week discount codes from the user's session
-           fetch('/discount/CLEAR_STUCK_DISCOUNT').then(() => {
+           fetch('/checkout?clear_discount=1').then(() => {
              addItemsToCart();
            }).catch(() => addItemsToCart());
         }
