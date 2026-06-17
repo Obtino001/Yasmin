@@ -2754,6 +2754,40 @@ delivery-picker[loading="true"] {
   background-color: #2a183b;
 }
 
+@media screen and (max-width: 749px) {
+  .delivery-input-group {
+    flex-direction: column;
+    border: none;
+    background-color: transparent;
+    gap: 10px;
+    overflow: visible;
+  }
+  
+  .delivery-select-wrapper {
+    border-right: none;
+    border: 1.5px solid var(--dp-border-purple);
+    border-radius: 6px;
+    width: 100%;
+  }
+  
+  .delivery-select-wrapper select {
+    width: 100%;
+  }
+  
+  .delivery-input-wrapper {
+    border: 1.5px solid var(--dp-border-purple);
+    border-radius: 6px;
+    background-color: #ffffff;
+    width: 100%;
+  }
+  
+  .delivery-submit-button {
+    border-radius: 6px;
+    padding: 14px 24px;
+    width: 100%;
+  }
+}
+
 /* Error Handling */
 .delivery-picker__error {
   display: none;

@@ -114,8 +114,39 @@
           </button>
         {% endfor %}
       </div>
+
+      <div class="delivery-time-slots visually-hidden" style="margin-top: 1.5rem;">
+        <div class="delivery-picker-step" style="margin-bottom: 1rem;">
+          <span class="step-text">{{ section.settings.pc_step_3_label | default: "STEP 3 — SELECT TIME SLOT" }}</span>
+        </div>
+        <div class="time-slots-container" style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+          <button type="button" class="time-slot-button" data-time-slot="09:00 - 22:00 (Standard)" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; background: transparent; cursor: pointer; text-align: left; transition: all 0.2s;">
+            <span class="time-slot-name" style="font-weight: 500;">09:00 - 22:00 (Standard)</span>
+            <span class="time-slot-price" style="font-weight: 600; color: #000;">Free</span>
+          </button>
+          <button type="button" class="time-slot-button" data-time-slot="09:00 - 17:00 (Early)" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; background: transparent; cursor: pointer; text-align: left; transition: all 0.2s;">
+            <span class="time-slot-name" style="font-weight: 500;">09:00 - 17:00 (Early)</span>
+            <span class="time-slot-price" style="font-weight: 600; color: #000;">+€1.99</span>
+          </button>
+          <button type="button" class="time-slot-button" data-time-slot="17:00 - 22:00 (Evening)" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; background: transparent; cursor: pointer; text-align: left; transition: all 0.2s;">
+            <span class="time-slot-name" style="font-weight: 500;">17:00 - 22:00 (Evening)</span>
+            <span class="time-slot-price" style="font-weight: 600; color: #000;">+€2.99</span>
+          </button>
+        </div>
+      </div>
     </div>
   </delivery-picker>
+
+  <style>
+    .time-slot-button:hover {
+      border-color: #000;
+    }
+    .time-slot-button.time-slot--active {
+      border-color: #000;
+      background-color: #f9f9f9;
+      box-shadow: inset 0 0 0 1px #000;
+    }
+  </style>
 
   <div class="delivery-picker-footer">
     <span class="footer-label">{{ section.settings.pc_footer_label | default: "We deliver to:" }}</span>

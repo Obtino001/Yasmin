@@ -1,6 +1,6 @@
 class DeliveryPicker extends HTMLElement {
   static get observedAttributes() {
-    return [ "delivery-date", "delivery-day", "zip-code" ];
+    return [ "delivery-date", "delivery-day", "zip-code", "delivery-time" ];
   }
 
   constructor() {
@@ -14,6 +14,7 @@ class DeliveryPicker extends HTMLElement {
 
     // Delivery zone elements
     this.deliveryZonesEl = this.element.querySelector(".delivery-zones");
+    this.deliveryTimeSlotsEl = this.element.querySelector(".delivery-time-slots");
     this.defaultErrorText = "";
   }
 
@@ -31,6 +32,12 @@ class DeliveryPicker extends HTMLElement {
     [...this.deliveryZonesEl.querySelectorAll(".delivery-zone")].forEach(deliveryZoneEl => {
       deliveryZoneEl.addEventListener("click", this.#handleDeliveryZoneSelection.bind(this));
     });
+
+    if (this.deliveryTimeSlotsEl) {
+      [...this.deliveryTimeSlotsEl.querySelectorAll(".time-slot-button")].forEach(timeSlotEl => {
+        timeSlotEl.addEventListener("click", this.#handleTimeSlotSelection.bind(this));
+      });
+    }
 
     const errorEl = this.querySelector(".delivery-picker__error");
     if (errorEl) {
@@ -50,10 +57,14 @@ class DeliveryPicker extends HTMLElement {
 
     const deliveryDateFromCache = localStorage.getItem("delivery-picker:delivery-date");
     const deliveryDayFromCache = localStorage.getItem("delivery-picker:delivery-day");
+    const deliveryTimeFromCache = localStorage.getItem("delivery-picker:delivery-time");
     if (deliveryDateFromCache && !this.getAttribute("delivery-date")) {
       this.setAttribute("delivery-date", deliveryDateFromCache);
       if (deliveryDayFromCache) {
         this.setAttribute("delivery-day", deliveryDayFromCache);
+      }
+      if (deliveryTimeFromCache) {
+        this.setAttribute("delivery-time", deliveryTimeFromCache);
       }
     }
 
@@ -89,6 +100,12 @@ class DeliveryPicker extends HTMLElement {
     [...this.deliveryZonesEl.querySelectorAll(".delivery-zone")].forEach(deliveryZoneEl => {
       deliveryZoneEl.removeEventListener("click", this.#handleDeliveryZoneSelection.bind(this));
     });
+
+    if (this.deliveryTimeSlotsEl) {
+      [...this.deliveryTimeSlotsEl.querySelectorAll(".time-slot-button")].forEach(timeSlotEl => {
+        timeSlotEl.removeEventListener("click", this.#handleTimeSlotSelection.bind(this));
+      });
+    }
   }
 
   updateCartAlert() {
@@ -127,6 +144,14 @@ class DeliveryPicker extends HTMLElement {
       }
     }
 
+    if (name === "delivery-time") {
+      if (newValue) {
+        localStorage.setItem("delivery-picker:delivery-time", newValue);
+      } else {
+        localStorage.removeItem("delivery-picker:delivery-time");
+      }
+    }
+
     if (name === "zip-code") {
       if (!!newValue) {
         localStorage.setItem("delivery-picker:zip-code", newValue);
@@ -150,8 +175,9 @@ class DeliveryPicker extends HTMLElement {
   #clearDeliveryDate() {
     this.setAttribute("delivery-date", "");
     this.setAttribute("delivery-day", "");
+    this.setAttribute("delivery-time", "");
 
-    this.#updateCart("", "");
+    this.#updateCart("", "", "");
     this.#showDeliveryZones();
   }
 
@@ -164,7 +190,15 @@ class DeliveryPicker extends HTMLElement {
     this.setAttribute("delivery-date", newDeliveryDate);
     this.setAttribute("delivery-day", newDeliveryDay);
 
-    this.#updateCart(newDeliveryDate, newDeliveryDay);
+    this.#updateCart(newDeliveryDate, newDeliveryDay, this.deliveryTime);
+    this.#showDeliveryZones();
+  }
+
+  #handleTimeSlotSelection(event) {
+    event.preventDefault();
+    const newDeliveryTime = event.currentTarget.dataset.timeSlot;
+    this.setAttribute("delivery-time", newDeliveryTime);
+    this.#updateCart(this.deliveryDate, this.deliveryDay, newDeliveryTime);
     this.#showDeliveryZones();
   }
 
@@ -233,6 +267,21 @@ class DeliveryPicker extends HTMLElement {
     });
 
     this.deliveryZonesEl.classList.remove("visually-hidden");
+
+    if (this.deliveryDate && this.deliveryZone && this.deliveryZone.zoneId !== "zone5") {
+      if (this.deliveryTimeSlotsEl) {
+        this.deliveryTimeSlotsEl.classList.remove("visually-hidden");
+        [...this.deliveryTimeSlotsEl.querySelectorAll(".time-slot-button")].forEach((btn) => {
+          if (btn.dataset.timeSlot === this.deliveryTime) {
+            btn.classList.add("time-slot--active");
+          } else {
+            btn.classList.remove("time-slot--active");
+          }
+        });
+      }
+    } else if (this.deliveryTimeSlotsEl) {
+      this.deliveryTimeSlotsEl.classList.add("visually-hidden");
+    }
   }
 
   #getMaxOffset() {
@@ -250,7 +299,7 @@ class DeliveryPicker extends HTMLElement {
       zone1: [3, 2, 3, 5, 4, 5, 4],
       zone2: [2, 3, 2, 6, 5, 4, 3],
       zone3: [2, 3, 2, 6, 5, 4, 3],
-      zone4: [2, 3, 2, 5, 4, 4, 3],
+      zone4: [3, 2, 2, 5, 4, 4, 3],
     };
 
     const zoneId = this.deliveryZone.zoneId;
@@ -267,13 +316,20 @@ class DeliveryPicker extends HTMLElement {
     return minOffsetsByZone[zoneId]?.[orderDay] ?? null;
   }
 
-  #updateCart(deliveryDate, deliveryDay) {
+  #updateCart(deliveryDate, deliveryDay, deliveryTime) {
     this.setAttribute("loading", true);
+
+    const attributes = { "Delivery Date": deliveryDate, "Delivery Day": deliveryDay };
+    if (deliveryTime) {
+      attributes["Delivery Time"] = deliveryTime;
+    } else {
+      attributes["Delivery Time"] = "";
+    }
 
     fetch("/cart/update.js", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json", },
-      body: JSON.stringify({ attributes: { "Delivery Date": deliveryDate, "Delivery Day": deliveryDay } }),
+      body: JSON.stringify({ attributes }),
     })
       .then((cart) => this.setAttribute("loading", false))
       .catch((error) => this.setAttribute("loading", false));
@@ -294,6 +350,14 @@ class DeliveryPicker extends HTMLElement {
 
   get deliveryDate() {
     return this.getAttribute("delivery-date");
+  }
+
+  get deliveryDay() {
+    return this.getAttribute("delivery-day");
+  }
+
+  get deliveryTime() {
+    return this.getAttribute("delivery-time");
   }
 
   get deliveryZone() {

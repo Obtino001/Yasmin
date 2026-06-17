@@ -105,12 +105,20 @@
               </div>
             {%- else -%}
               <div class="cart__ctas" {{ block.shopify_attributes }}>
+                {%- assign cart_min_amount = 4995 -%}
+                {%- if cart.total_price < cart_min_amount and cart != empty -%}
+                  <div class="cart-minimum-warning" style="margin-bottom: 1.5rem; color: #d93025; font-size: 14px; text-align: center; border: 1px solid #fce8e6; padding: 12px; border-radius: 4px; background: #fce8e6; width: 100%;">
+                    {%- assign amount_short = cart_min_amount | minus: cart.total_price | money -%}
+                    To proceed to checkout, please add <strong>{{ amount_short }}</strong> more to your cart (minimum order value is {{ cart_min_amount | money }}).
+                  </div>
+                {%- endif -%}
+
                 <button
                   type="submit"
                   id="checkout"
                   class="cart__checkout-button button"
                   name="checkout"
-                  {% if cart == empty %}
+                  {% if cart == empty or cart.total_price < cart_min_amount %}
                     disabled
                   {% endif %}
                   form="cart"
