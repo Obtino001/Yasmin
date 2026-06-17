@@ -2335,15 +2335,23 @@ label.mb-sub-card {
         if (this.state.duration === 12) discountCode = '12WEEKS_PLAN';
         if (this.state.duration === 24) discountCode = '24WEEKS_PLAN';
 
-        if (discountCode) {
-           fetch(`/discount/${discountCode}`).then(() => {
-             addItemsToCart();
-           }).catch(() => addItemsToCart());
-        } else {
-           fetch('/checkout?clear_discount=1').then(() => {
-             addItemsToCart();
-           }).catch(() => addItemsToCart());
-        }
+        // Always clear any stuck discount code first
+        fetch('/checkout?clear_discount=1').then(() => {
+           if (discountCode) {
+              fetch(`/discount/${discountCode}`).then(() => {
+                addItemsToCart();
+              }).catch(() => addItemsToCart());
+           } else {
+              addItemsToCart();
+           }
+        }).catch(() => {
+           // Fallback in case clear fails
+           if (discountCode) {
+              fetch(`/discount/${discountCode}`).then(() => addItemsToCart()).catch(() => addItemsToCart());
+           } else {
+              addItemsToCart();
+           }
+        });
       }
     });
   }

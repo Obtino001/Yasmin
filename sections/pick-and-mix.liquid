@@ -1552,10 +1552,11 @@ pick-and-mix-error {
           if (durStr.includes('12')) discountCode = '12WEEKS_PLAN';
           if (durStr.includes('24')) discountCode = '24WEEKS_PLAN';
 
+          // Always clear any stuck discount code first
+          await fetch('/checkout?clear_discount=1').catch(() => {});
+
           if (discountCode) {
-             await fetch(`/discount/${discountCode}`);
-          } else {
-             await fetch('/checkout?clear_discount=1');
+             await fetch(`/discount/${discountCode}`).catch(() => {});
           }
 
           window.location.href = '/checkout';
