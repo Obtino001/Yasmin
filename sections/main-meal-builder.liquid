@@ -788,6 +788,35 @@ label.mb-sub-card {
           </button>
         {% endfor %}
       </div>
+      
+      <div class="delivery-time-slots visually-hidden" style="margin-top: 1.5rem;">
+        <p style="font-weight: 600; margin-bottom: 0.75rem; color: #111827;">Select Time Slot</p>
+        <div class="time-slots-container" style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+          <button type="button" class="time-slot-button time-slot--active" data-time-slot="09:00 - 22:00">
+            <div class="time-slot-info">
+              <span class="time-slot-name">Standard</span>
+              <span class="time-slot-hours">09:00 - 22:00</span>
+            </div>
+            <span class="time-slot-price">Free</span>
+          </button>
+          
+          <button type="button" class="time-slot-button" data-time-slot="09:00 - 17:00">
+            <div class="time-slot-info">
+              <span class="time-slot-name">Early</span>
+              <span class="time-slot-hours">09:00 - 17:00</span>
+            </div>
+            <span class="time-slot-price">+€1.99</span>
+          </button>
+          
+          <button type="button" class="time-slot-button" data-time-slot="17:00 - 22:00">
+            <div class="time-slot-info">
+              <span class="time-slot-name">Evening</span>
+              <span class="time-slot-hours">17:00 - 22:00</span>
+            </div>
+            <span class="time-slot-price">+€2.99</span>
+          </button>
+        </div>
+      </div>
     </div>
   </delivery-picker>
 
@@ -2251,11 +2280,21 @@ label.mb-sub-card {
         });
 
         const addItemsToCart = () => {
+          const picker = document.querySelector('delivery-picker');
+          const cartAttributes = {};
+          if (picker) {
+             if (picker.deliveryDate) cartAttributes['Delivery Date'] = picker.deliveryDate;
+             if (picker.deliveryDay) cartAttributes['Delivery Day'] = picker.deliveryDay;
+             if (picker.deliveryTime) cartAttributes['Delivery Time'] = picker.deliveryTime;
+             if (picker.deliveryZone) cartAttributes['Delivery Zone'] = picker.deliveryZone.zoneId;
+          }
+
           fetch(window.Shopify.routes.root + 'cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
               items: itemsToAdd,
+              attributes: cartAttributes,
               sections: document.querySelector('cart-drawer') ? 'cart-drawer,cart-icon-bubble' : undefined,
               sections_url: window.location.pathname
             })
