@@ -2757,8 +2757,9 @@ delivery-picker[loading="true"] {
 @media screen and (max-width: 749px) {
   .delivery-input-group {
     flex-direction: column;
-    border: none;
-    background-color: transparent;
+    border: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
     gap: 10px;
     overflow: visible;
   }
@@ -2768,10 +2769,14 @@ delivery-picker[loading="true"] {
     border: 1.5px solid var(--dp-border-purple);
     border-radius: 6px;
     width: 100%;
+    overflow: hidden;
+    background-color: #ffffff;
   }
   
   .delivery-select-wrapper select {
     width: 100%;
+    outline: none !important;
+    box-shadow: none !important;
   }
   
   .delivery-input-wrapper {
@@ -2779,6 +2784,12 @@ delivery-picker[loading="true"] {
     border-radius: 6px;
     background-color: #ffffff;
     width: 100%;
+    overflow: hidden;
+  }
+  
+  .delivery-input-wrapper input {
+    outline: none !important;
+    box-shadow: none !important;
   }
   
   .delivery-submit-button {
