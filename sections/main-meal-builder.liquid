@@ -2272,7 +2272,7 @@ label.mb-sub-card {
             const addedText = this.dataset.addedText || 'Added to Cart!';
             btn.textContent = addedText;
 
-            // 3. Apply Discount and Redirect/Open Cart
+            // 3. Apply Discount and Open Cart
             let discountCode = '';
             if (this.state.duration === 12) {
                discountCode = '12WEEKS_PLAN';
@@ -2281,22 +2281,20 @@ label.mb-sub-card {
             }
 
             if (discountCode !== '') {
-               // Force checkout with discount to guarantee it overrides any previous codes
-               window.location.href = `/checkout?discount=${discountCode}`;
+               await fetch(`/discount/${discountCode}?_t=${Date.now()}`);
             } else {
-               // For 4-week plans, clear any stuck discounts with cache busting, then open drawer
                await fetch(`/discount/CLEAR_STUCK_DISCOUNT?_t=${Date.now()}`);
-               
-               const cartDrawer = document.querySelector('cart-drawer');
-               if (cartDrawer && parsedState.sections) {
-                 cartDrawer.renderContents(parsedState);
-                 setTimeout(() => { 
-                   btn.textContent = btn.dataset.defaultText || 'Place Order'; 
-                   btn.disabled = false; 
-                 }, 2000);
-               } else {
-                 window.location.href = window.Shopify.routes.root + 'cart';
-               }
+            }
+            
+            const cartDrawer = document.querySelector('cart-drawer');
+            if (cartDrawer && parsedState.sections) {
+              cartDrawer.renderContents(parsedState);
+              setTimeout(() => { 
+                btn.textContent = btn.dataset.defaultText || 'Place Order'; 
+                btn.disabled = false; 
+              }, 2000);
+            } else {
+              window.location.href = window.Shopify.routes.root + 'cart';
             }
           } catch (error) {
             console.error('Cart error:', error);
