@@ -1579,20 +1579,13 @@ label.mb-sub-card {
           const planNameLower = planName.toLowerCase();
           const numbers = (planNameLower.match(/\d+/g) || []).map(num => parseInt(num, 10));
 
-          // Explicitly check for exact matches first to bypass regex issues
-          if (weeksNum === 12 && (planName === '12WEEKS_PLAN' || planNameLower.includes('12 weeks') || planNameLower.includes('12weken') || planNameLower.includes('12 weken'))) {
-             // force match
-          } else if (weeksNum === 24 && (planName === '24WEEKS_PLAN' || planNameLower.includes('24 weeks') || planNameLower.includes('24weken') || planNameLower.includes('24 weken'))) {
-             // force match
-          } else {
-            // Check if the plan contains any of the excluded numbers for other durations
-            const hasExcluded = spec.exclude.some(ex => numbers.includes(ex));
-            if (hasExcluded) continue;
+          // Check if the plan contains any of the excluded numbers for other durations
+          const hasExcluded = spec.exclude.some(ex => numbers.includes(ex));
+          if (hasExcluded) continue;
 
-            // Check if the plan matches our duration or its discount percentage
-            const isMatch = numbers.includes(spec.duration) || (spec.discount !== null && numbers.includes(spec.discount));
-            if (!isMatch) continue;
-          }
+          // Check if the plan matches our duration or its discount percentage
+          const isMatch = numbers.includes(spec.duration) || (spec.discount !== null && numbers.includes(spec.discount));
+          if (!isMatch) continue;
 
           const variantMap = data[planName];
           if (!variantMap) continue;
@@ -2246,7 +2239,8 @@ label.mb-sub-card {
           };
           
           if (this.state.duration > 1) {
-            let resolvedPlanId = this.resolvePlanId(this.state.duration, this.state.days, box.productId);
+            const resolvedPlanId = this.resolvePlanId(this.state.duration, this.state.days, box.productId)
+              ?? (this.state.planId && !isNaN(parseInt(this.state.planId, 10)) ? parseInt(this.state.planId, 10) : null);
 
             if (resolvedPlanId !== null && !isNaN(resolvedPlanId)) {
               item.selling_plan = resolvedPlanId;
@@ -2256,61 +2250,54 @@ label.mb-sub-card {
           itemsToAdd.push(item);
         });
 
-        const addItemsToCart = async () => {
-          try {
-            // 1. Clear cart to prevent mixing old 24/12 week items and messing up discounts
-            await fetch(window.Shopify.routes.root + 'cart/clear.js', { method: 'POST' });
-
-            // 2. Add new items
-            const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ 
-                items: itemsToAdd,
-                sections: document.querySelector('cart-drawer') ? 'cart-drawer,cart-icon-bubble' : undefined,
-                sections_url: window.location.pathname
-              })
-            });
-            
-            if (!response.ok) throw new Error('Error adding to cart');
-            const parsedState = await response.json();
-
+        const addItemsToCart = () => {
+          fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              items: itemsToAdd,
+              sections: document.querySelector('cart-drawer') ? 'cart-drawer,cart-icon-bubble' : undefined,
+              sections_url: window.location.pathname
+            })
+          })
+          .then(response => {
+            if(!response.ok) throw new Error('Error adding to cart');
+            return response.json();
+          })
+          .then((parsedState) => {
             const addedText = this.dataset.addedText || 'Added to Cart!';
             btn.textContent = addedText;
 
-            // 3. Apply Discount and Open Cart
-            let discountCode = '';
-            if (this.state.duration === 12) {
-               discountCode = '12WEEKS_PLAN';
-            } else if (this.state.duration === 24) {
-               discountCode = '24WEEKS_PLAN';
-            }
-
-            if (discountCode !== '') {
-               await fetch(`/discount/${discountCode}?_t=${Date.now()}`);
-            } else {
-               await fetch(`/discount/CLEAR_STUCK_DISCOUNT?_t=${Date.now()}`);
-            }
-            
             const cartDrawer = document.querySelector('cart-drawer');
             if (cartDrawer && parsedState.sections) {
-              cartDrawer.renderContents(parsedState);
-              setTimeout(() => { 
-                btn.textContent = btn.dataset.defaultText || 'Place Order'; 
-                btn.disabled = false; 
-              }, 2000);
+               cartDrawer.renderContents(parsedState);
             } else {
-              window.location.href = window.Shopify.routes.root + 'cart';
+               window.location.href = window.Shopify.routes.root + 'cart';
             }
-          } catch (error) {
+            setTimeout(() => { 
+              btn.textContent = btn.dataset.defaultText || 'Place Order'; 
+              btn.disabled = false; 
+            }, 2000);
+          })
+          .catch(error => {
             console.error('Cart error:', error);
             const errorTextMsg = this.dataset.errorText || 'Error — try again';
             btn.textContent = errorTextMsg;
             setTimeout(() => { btn.textContent = btn.dataset.defaultText || 'Place Order'; btn.disabled = false; }, 3000);
-          }
+          });
         };
 
-        addItemsToCart();
+        if (this.state.duration === 12 || this.state.duration === 24) {
+           let discountCode = this.state.duration === 12 ? '12WEEKS_PLAN' : '24WEEKS_PLAN';
+           fetch(`/discount/${discountCode}`).then(() => {
+             addItemsToCart();
+           }).catch(() => addItemsToCart());
+        } else {
+           // Clear any stuck 12/24 week discount codes from the user's session
+           fetch('/discount/CLEAR_STUCK_DISCOUNT').then(() => {
+             addItemsToCart();
+           }).catch(() => addItemsToCart());
+        }
       }
     });
   }
