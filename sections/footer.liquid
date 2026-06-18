@@ -525,26 +525,12 @@
     <div class="footer__middle-row">
       {%- comment -%} Languages on the Left {%- endcomment -%}
       <div class="footer__languages-container">
-        {%- if localization.available_languages.size > 1 -%}
-          <div class="localization-form-wrapper">
+        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+          <localization-form>
             {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
-              <div class="footer__language-circles">
-                {%- for language in localization.available_languages -%}
-                  <button type="submit" name="locale_code" value="{{ language.iso_code }}" class="language-circle {% if language.iso_code == localization.language.iso_code %}active{% endif %}">
-                    {{ language.iso_code | upcase }}
-                  </button>
-                {%- endfor -%}
-              </div>
+              {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
             {%- endform -%}
-          </div>
-        {%- else -%}
-          <div class="footer__language-circles">
-            <span class="language-circle active">NL</span>
-            <span class="language-circle">EN</span>
-            <span class="language-circle">TR</span>
-            <span class="language-circle">DE</span>
-            <span class="language-circle">FR</span>
-          </div>
+          </localization-form>
         {%- endif -%}
       </div>
 
