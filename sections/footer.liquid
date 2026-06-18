@@ -526,11 +526,17 @@
       {%- comment -%} Languages on the Left {%- endcomment -%}
       <div class="footer__languages-container">
         {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          <localization-form>
+          <div class="localization-form-wrapper">
             {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
-              {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
+              <div class="footer__language-circles">
+                {%- for language in localization.available_languages -%}
+                  <button type="submit" name="locale_code" value="{{ language.iso_code }}" class="language-circle {% if language.iso_code == localization.language.iso_code %}active{% endif %}">
+                    {{ language.iso_code | upcase }}
+                  </button>
+                {%- endfor -%}
+              </div>
             {%- endform -%}
-          </localization-form>
+          </div>
         {%- endif -%}
       </div>
 
