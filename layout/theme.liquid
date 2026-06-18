@@ -371,12 +371,28 @@
   </a>
 </div>
 <style>
-.ym-moving-bar{background:#1d1d2e;color:#fff;text-align:center;padding:10px 16px;font-size:14px;line-height:1.45}
+.ym-moving-bar{position:sticky;top:0;z-index:102;background:#1d1d2e;color:#fff;text-align:center;padding:10px 16px;font-size:14px;line-height:1.45}
 .ym-moving-bar__link{color:#fff!important;text-decoration:none;font-weight:500}
 .ym-moving-bar__link:hover{text-decoration:underline}
 .ym-moving-bar strong{font-weight:700}
+.shopify-section-header-sticky { top: var(--moving-bar-height, 0px) !important; }
 {%- comment -%} yasemin-moving-banner END {%- endcomment -%}
 </style>
+
+<script>
+  function updateMovingBarHeight() {
+    const bar = document.querySelector('.ym-moving-bar');
+    if (bar) {
+      document.documentElement.style.setProperty('--moving-bar-height', bar.offsetHeight + 'px');
+    } else {
+      document.documentElement.style.setProperty('--moving-bar-height', '0px');
+    }
+  }
+  window.addEventListener('resize', updateMovingBarHeight);
+  document.addEventListener('DOMContentLoaded', updateMovingBarHeight);
+  // Execute immediately just in case
+  updateMovingBarHeight();
+</script>
 
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
