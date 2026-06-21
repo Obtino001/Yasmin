@@ -360,7 +360,11 @@
       "url": {{ shop.url | json }}
     }
     </script>
-  </head>
+  {%- comment -%} yasemin-recipe-schema-nl {%- endcomment -%}
+{%- if request.page_type == 'article' and localization.language.iso_code == 'nl' and article.metafields.custom.recipe_schema != blank -%}
+<script type="application/ld+json">{{ article.metafields.custom.recipe_schema.value }}</script>
+{%- endif -%}
+</head>
 
   <body class="cu--{{ template.name }} gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
 {%- comment -%} yasemin-moving-banner START — verwijder dit hele blok om de actiebanner weg te halen {%- endcomment -%}
