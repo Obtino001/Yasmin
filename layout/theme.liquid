@@ -11,7 +11,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="">
     {%- if request.page_type == 'collection' and request.path contains '/collections/' -%}
-      <link rel="canonical" href="{{ shop.url }}/collections/{{ collection.handle }}">
+      {%- assign coll_base = canonical_url | split: '?' | first -%}
+      {%- if coll_base == blank -%}{%- assign coll_base = canonical_url -%}{%- endif -%}
+      {%- if current_page > 1 -%}
+        <link rel="canonical" href="{{ coll_base }}?page={{ current_page }}">
+      {%- else -%}
+        <link rel="canonical" href="{{ coll_base }}">
+      {%- endif -%}
     {%- elsif canonical_url != blank -%}
       <link rel="canonical" href="{{ canonical_url }}">
     {%- else -%}
