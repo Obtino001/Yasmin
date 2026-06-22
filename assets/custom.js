@@ -89,13 +89,31 @@ class DeliveryPicker extends HTMLElement {
       this.#clearDeliveryDate();
     }
 
-    this.countryEl.addEventListener("change", this.#updateFlag.bind(this));
+    this.countryEl.addEventListener("change", this.#onCountryChange.bind(this));
     this.#updateFlag();
+
+    if (this.zipCode) {
+      this.#showDeliveryZones();
+    }
+  }
+
+  #onCountryChange() {
+    this.#updateFlag();
+    if (this.zipCode) {
+      this.#showDeliveryZones();
+      if (this.deliveryZone) {
+        sessionStorage.setItem("postcodeVerified", "true");
+        window.postcodeVerified = true;
+      } else {
+        sessionStorage.setItem("postcodeVerified", "false");
+        window.postcodeVerified = false;
+      }
+    }
   }
 
   disconnectedCallback() {
     this.formEl.removeEventListener("submit", this.#handleFormSubmission.bind(this));
-    this.countryEl.removeEventListener("change", this.#updateFlag.bind(this));
+    this.countryEl.removeEventListener("change", this.#onCountryChange.bind(this));
 
     [...this.deliveryZonesEl.querySelectorAll(".delivery-zone")].forEach(deliveryZoneEl => {
       deliveryZoneEl.removeEventListener("click", this.#handleDeliveryZoneSelection.bind(this));
@@ -211,14 +229,17 @@ class DeliveryPicker extends HTMLElement {
       errorEl.textContent = this.defaultErrorText;
     }
     
-    if(!this.deliveryZone) {
-       this.setAttribute("delivery-error", true);
-       sessionStorage.setItem("postcodeVerified", "false");
-       window.postcodeVerified = false;
+    if (!this.deliveryZone) {
+      this.setAttribute("delivery-error", "true");
+      sessionStorage.setItem("postcodeVerified", "false");
+      window.postcodeVerified = false;
+      this.#hideDeliveryZones();
+      this.#setZoneFeedback(false);
     } else {
-       this.removeAttribute("delivery-error");
-       sessionStorage.setItem("postcodeVerified", "true");
-       window.postcodeVerified = true;
+      this.removeAttribute("delivery-error");
+      sessionStorage.setItem("postcodeVerified", "true");
+      window.postcodeVerified = true;
+      this.#showDeliveryZones();
     }
   }
 
@@ -243,9 +264,23 @@ class DeliveryPicker extends HTMLElement {
     }
   }
 
+  #setZoneFeedback(hasVisibleDates) {
+    const feedbackEl = this.element.querySelector(".delivery-zone__form-feedback");
+    const unavailableTemplate = this.element.querySelector("#delivery-zone-unavailable");
+    if (!feedbackEl) return;
+
+    feedbackEl.innerHTML = "";
+    if (this.deliveryZone && !hasVisibleDates && unavailableTemplate) {
+      feedbackEl.appendChild(unavailableTemplate.content.cloneNode(true));
+    }
+  }
+
   #showDeliveryZones() {
+    if (!this.deliveryZonesEl) return;
+
     const minOffset = this.#getMinOffset();
     const maxOffset = this.#getMaxOffset();
+    let visibleCount = 0;
 
     [...this.deliveryZonesEl.querySelectorAll(".delivery-zone")].forEach((deliveryZoneEl) => {
       if (deliveryZoneEl.dataset.deliveryDate == this.deliveryDate) {
@@ -261,12 +296,20 @@ class DeliveryPicker extends HTMLElement {
 
       if (dayMatch && offsetMatch && withinWeekMatch) {
         deliveryZoneEl.classList.remove("visually-hidden");
+        visibleCount++;
       } else {
         deliveryZoneEl.classList.add("visually-hidden");
       }
     });
 
-    this.deliveryZonesEl.classList.remove("visually-hidden");
+    if (this.deliveryZone) {
+      this.deliveryZonesEl.classList.remove("visually-hidden");
+      this.#setZoneFeedback(visibleCount > 0);
+    } else {
+      this.#hideDeliveryZones();
+      this.#setZoneFeedback(false);
+      return;
+    }
 
     if (this.deliveryDate && this.deliveryZone && this.deliveryZone.zoneId !== "zone5") {
       if (this.deliveryTimeSlotsEl) {
@@ -361,7 +404,7 @@ class DeliveryPicker extends HTMLElement {
   }
 
   get deliveryZone() {
-    if (!this.zipCode || Number.isNaN(this.zipCodeDigits)) return null;
+    if (!this.zipCode || this.zipCodeDigits === null) return null;
 
     const deliveryZonesForCountry = this.deliveryZones.filter(deliveryZone => deliveryZone.countryCode === this.countryEl.value);
     return deliveryZonesForCountry.find(zone => this.zipCodeDigits >= zone.startsAt && this.zipCodeDigits <= zone.endsAt) || null;
@@ -377,7 +420,10 @@ class DeliveryPicker extends HTMLElement {
 
   get zipCodeDigits() {
     if (!this.zipCode) return null;
-    return this.zipCode.replace(/\D/g, "");
+    const digits = this.zipCode.replace(/\D/g, "");
+    if (!digits) return null;
+    const value = parseInt(digits, 10);
+    return Number.isNaN(value) ? null : value;
   }
 }
 

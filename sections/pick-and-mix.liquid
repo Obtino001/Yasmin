@@ -525,6 +525,10 @@ pick-and-mix-error {
         <div class="delivery-zone__form-feedback"></div>
       </div>
 
+      <div class="delivery-picker-step delivery-picker-step--dates" style="margin-top: 1rem; margin-bottom: 1rem;">
+        <span class="step-text">{{ section.settings.pc_step_2_label | default: "STEP 2 — SELECT DELIVERY DATE" }}</span>
+      </div>
+
       <div class="delivery-zones {% if delivery_date == blank %} visually-hidden {% endif %}">
         {% assign max_days = section.settings.max_days_ahead | default: 21 %}
         {% for i in (2..max_days) %}

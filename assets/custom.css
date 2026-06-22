@@ -2671,6 +2671,14 @@ delivery-picker[loading="true"] {
   margin-bottom: 4px;
 }
 
+.delivery-picker-step--dates {
+  display: none;
+}
+
+delivery-picker[zip-code] .delivery-picker-step--dates {
+  display: flex;
+}
+
 .step-text {
   font-size: 13.6px;
   font-weight: 700;
@@ -2809,6 +2817,16 @@ delivery-picker[loading="true"] {
 
 delivery-picker[delivery-error] .delivery-picker__error {
   display: block;
+}
+
+.delivery-zone__form-feedback {
+  margin-top: 8px;
+}
+
+.delivery-zone__feedback--unavailable {
+  color: var(--dp-error-text, #c62828);
+  font-size: 14px;
+  margin: 0;
 }
 
 /* Footer Badges */
