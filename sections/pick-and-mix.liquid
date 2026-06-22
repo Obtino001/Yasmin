@@ -422,10 +422,14 @@ pick-and-mix-error {
   }
 {%- endstyle -%}
 
+{%- assign t_error_delivery_required = 'sections.delivery-picker.errors.required' | t -%}
+
 <pick-and-mix-builder class="pick-mix-wrapper color-{{ section.settings.color_scheme }}" 
   data-adding-text="{{ section.settings.js_adding_text | escape }}"
   data-added-text="{{ section.settings.js_added_text | escape }}"
   data-error-text="{{ section.settings.js_error_text | escape }}"
+  data-error-delivery-postcode="{{ section.settings.pc_error_text | default: 'Please enter a valid postcode' | escape }}"
+  data-error-delivery-date="{{ section.settings.pc_js_error_add_to_order | default: t_error_delivery_required | escape }}"
   data-mains-label="{{ section.settings.label_mains | default: 'mains' }}"
   data-sides-label="{{ section.settings.label_sides | default: 'sides' }}"
   data-no-dishes="{{ section.settings.label_no_dishes | default: 'No dishes selected yet' }}"
@@ -517,7 +521,7 @@ pick-and-mix-error {
           <button type="submit" class="delivery-submit-button">{{ section.settings.pc_button_text | default: "Check &rarr;" }}</button>
         </form>
 
-        <p class="delivery-picker__error" role="alert">{{ section.settings.pc_error_text | default: "Kies een bezorgdatum om verder te gaan." }}</p>
+        <p class="delivery-picker__error" role="alert">{{ section.settings.pc_error_text | default: "Please enter a valid postcode" }}</p>
         <div class="delivery-zone__form-feedback"></div>
       </div>
 
@@ -996,13 +1000,13 @@ pick-and-mix-error {
            const isPostcodeOk = window.postcodeVerified === true || sessionStorage.getItem('postcodeVerified') === 'true';
            if (!isPostcodeOk) {
              if (typeof picker.triggerError === 'function') {
-               picker.triggerError('{{ section.settings.pc_js_error_add_to_order | default: "Kies een bezorgdatum om verder te gaan." | escape }}');
+               picker.triggerError(this.dataset.errorDeliveryPostcode || 'Please enter a valid postcode.');
              }
              const zipInput = picker.querySelector('input#delivery_zone_zip_code') || picker.querySelector('input');
              if (zipInput) zipInput.focus();
            } else {
              if (typeof picker.triggerError === 'function') {
-               picker.triggerError('{{ section.settings.pc_js_error_add_to_order | default: "Please select a delivery date first." | escape }}');
+               picker.triggerError(this.dataset.errorDeliveryDate || 'Please select a delivery date before continuing.');
              }
            }
          }

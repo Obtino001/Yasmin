@@ -695,12 +695,14 @@ label.mb-sub-card {
   }
 {%- endstyle -%}
 
+{%- assign t_error_delivery_required = 'sections.delivery-picker.errors.required' | t -%}
+
 <meal-builder-chef class="meal-builder-wrapper color-{{ section.settings.color_scheme }}" 
   data-adding-text="{{ section.settings.cart_adding_text | escape }}"
   data-added-text="{{ section.settings.cart_added_text | escape }}"
   data-error-text="{{ section.settings.cart_error_text | escape }}"
-  data-error-delivery-postcode="{{ section.settings.pc_js_error_add_to_order | default: t_error_delivery_required | escape }}"
-  data-error-delivery-date="{{ section.settings.pc_error_text | default: t_error_delivery_required | escape }}"
+  data-error-delivery-postcode="{{ section.settings.pc_error_text | default: 'Please enter a valid postcode' | escape }}"
+  data-error-delivery-date="{{ section.settings.pc_js_error_add_to_order | default: t_error_delivery_required | escape }}"
   data-people-label="{{ section.settings.people_label | default: 'people' }}"
   data-boxes-label="{{ section.settings.boxes_label | default: 'boxes' }}"
   data-select-up-to="{{ section.settings.label_select_up_to | default: 'select up to' }}"
@@ -799,7 +801,7 @@ label.mb-sub-card {
           <button type="submit" class="delivery-submit-button">{{ section.settings.pc_button_text | default: "Check &rarr;" }}</button>
         </form>
 
-        <p class="delivery-picker__error" role="alert">{{ section.settings.pc_error_text | default: t_error_delivery_required }}</p>
+        <p class="delivery-picker__error" role="alert">{{ section.settings.pc_error_text | default: "Please enter a valid postcode" }}</p>
         <div class="delivery-zone__form-feedback"></div>
       </div>
 
@@ -1285,13 +1287,13 @@ label.mb-sub-card {
            const isPostcodeOk = window.postcodeVerified === true || sessionStorage.getItem('postcodeVerified') === 'true';
            if (!isPostcodeOk) {
               if (typeof picker.triggerError === 'function') {
-                picker.triggerError(this.dataset.errorDeliveryPostcode || 'Kies een bezorgdatum om verder te gaan.');
+                picker.triggerError(this.dataset.errorDeliveryPostcode || 'Please enter a valid postcode.');
               }
               const zipInput = picker.querySelector('input#delivery_zone_zip_code') || picker.querySelector('input');
               if (zipInput) zipInput.focus();
             } else {
                if (typeof picker.triggerError === 'function') {
-                 picker.triggerError(this.dataset.errorDeliveryDate || 'Kies eerst een bezorgdatum.');
+                 picker.triggerError(this.dataset.errorDeliveryDate || 'Please select a delivery date before continuing.');
                }
             }
          }
