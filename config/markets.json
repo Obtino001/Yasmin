@@ -8,15 +8,12 @@
  * ------------------------------------------------------------
  */
 {
-  "context": {
-    "market": "english"
-  },
-  "parent": "product.json",
-  "sections": {
-    "custom_installation_steps_mNaKfF": {
-      "disabled": false,
-      "settings": {},
-      "blocks": {}
+  "markets": {
+    "english": {
+      "parent": "@default"
+    },
+    "nl-1": {
+      "parent": "@default"
     }
   }
 }

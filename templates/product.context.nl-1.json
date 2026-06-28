@@ -12,5 +12,11 @@
     "market": "nl-1"
   },
   "parent": "product.json",
-  "sections": {}
+  "sections": {
+    "custom_installation_steps_mNaKfF": {
+      "disabled": false,
+      "settings": {},
+      "blocks": {}
+    }
+  }
 }
