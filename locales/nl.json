@@ -685,9 +685,9 @@
       "title_prefix": "Voor uw",
       "title_suffix": "-weken plan",
       "subtitle": "Zo werken uw wekelijkse keuzes",
-      "step1": "<strong>U kiest nu de boxen voor de eerste 4 weken.</strong>",
-      "step2": "Uw keuzes voor de resterende weken <strong>kunnen in uw account worden gewijzigd</strong>.",
-      "step3": "Of uw <strong>keuzes van week 4 worden automatisch herhaald</strong>.",
+      "step1_html": "<strong>U kiest nu de boxen voor de eerste 4 weken.</strong>",
+      "step2_html": "Uw keuzes voor de resterende weken <strong>kunnen in uw account worden gewijzigd</strong>.",
+      "step3_html": "Of uw <strong>keuzes van week 4 worden automatisch herhaald</strong>.",
       "btn_proceed": "Begrepen — Bestelling plaatsen",
       "btn_cancel": "Ga terug"
     }
