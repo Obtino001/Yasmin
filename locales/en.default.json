@@ -448,7 +448,7 @@
       "labels": {
         "country": "Country",
         "zip_code": "Postcode",
-        "select_country": "Land auswählen"
+        "select_country": "Select country"
       },
       "days": {
         "monday": "Monday",
@@ -688,14 +688,14 @@
       }
     },
     "meal_builder": {
-      "title_prefix": "Für Ihren",
-      "title_suffix": "-Wochen-Plan",
-      "subtitle": "So funktionieren Ihre wöchentlichen Auswahlen",
-      "step1_html": "<strong>Sie wählen jetzt Boxen für die ersten 4 Wochen aus.</strong>",
-      "step2_html": "Ihre Auswahlen für die verbleibenden Wochen <strong>können in Ihrem Konto aktualisiert werden</strong>.",
-      "step3_html": "Oder Ihre <strong>Auswahlen von Woche 4 wiederholen sich automatisch</strong>.",
-      "btn_proceed": "Verstanden — Bestellung aufgeben",
-      "btn_cancel": "Zurück"
+      "title_prefix": "For your",
+      "title_suffix": "-week plan",
+      "subtitle": "How your weekly choices work",
+      "step1_html": "<strong>You now choose the boxes for the first 4 weeks.</strong>",
+      "step2_html": "Your choices for the remaining weeks <strong>can be changed in your account</strong>.",
+      "step3_html": "Or your <strong>choices from week 4 are automatically repeated</strong>.",
+      "btn_proceed": "Got it — Place order",
+      "btn_cancel": "Go back"
     }
   },
   "localization": {
