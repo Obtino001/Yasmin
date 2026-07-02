@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "try_first_pkg_hero": {
@@ -46,12 +55,14 @@
         "announcement_link": "#order",
         "announcement_bg_color": "#000000",
         "announcement_text_color": "#ffffff",
+        "logo_image": "shopify://shop_images/yasemin_logo.webp",
         "logo_width": 140,
         "header_btn_text": "Order Now",
         "header_btn_link": "#order",
         "header_bg_color": "#ffffff",
         "header_btn_bg": "#231f5c",
         "header_btn_color": "#ffffff",
+        "hero_image": "shopify://shop_images/Guvec_1.png",
         "overlay_opacity": 45,
         "rating_stars": "★★★★★",
         "rating_text": "Rated 4.5 / 5 (2000+)",
@@ -74,42 +85,49 @@
         "dish_1": {
           "type": "dish",
           "settings": {
+            "product": "acem-koftesi",
             "custom_title": "Chicken Dish"
           }
         },
         "dish_2": {
           "type": "dish",
           "settings": {
+            "product": "adana",
             "custom_title": "Chicken Dish"
           }
         },
         "dish_3": {
           "type": "dish",
           "settings": {
+            "product": "antep-tava",
             "custom_title": "Chicken Dish"
           }
         },
         "dish_4": {
           "type": "dish",
           "settings": {
+            "product": "aribasi-corbasi",
             "custom_title": "Chicken Dish"
           }
         },
         "dish_5": {
           "type": "dish",
           "settings": {
+            "product": "aribasi-corbasi",
             "custom_title": "Chicken Dish"
           }
         },
         "dish_6": {
           "type": "dish",
           "settings": {
+            "product": "baharatli-mini-patates",
             "custom_title": "Chicken Dish"
           }
         },
         "dish_7": {
           "type": "dish",
           "settings": {
+            "product": "baharatli-mini-patates",
             "custom_title": "Chicken Dish"
           }
         }
@@ -143,7 +161,7 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 8h1a4 4 0 0 1 0 8h-1\"></path><path d=\"M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z\"></path><line x1=\"6\" y1=\"1\" x2=\"6\" y2=\"4\"></line><line x1=\"10\" y1=\"1\" x2=\"10\" y2=\"4\"></line><line x1=\"14\" y1=\"1\" x2=\"14\" y2=\"4\"></line></svg>",
+            "custom_svg": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 8h1a4 4 0 0 1 0 8h-1\"></path><path d=\"M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z\"></path><line x1=\"6\" y1=\"1\" x2=\"6\" y2=\"4\"></line><line x1=\"10\" y1=\"1\" x2=\"10\" y2=\"4\"></line><line x1=\"14\" y1=\"1\" x2=\"14\" y2=\"4\"></line></svg>",
             "step_number": "",
             "title": "Choose your meals",
             "text": "Choose from 60+ authentic Turkish dishes — changing weekly."
@@ -152,7 +170,7 @@
         "step_2": {
           "type": "step",
           "settings": {
-            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z\"></path><line x1=\"6\" y1=\"17\" x2=\"18\" y2=\"17\"></line></svg>",
+            "custom_svg": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z\"></path><line x1=\"6\" y1=\"17\" x2=\"18\" y2=\"17\"></line></svg>",
             "step_number": "",
             "title": "We prepare fresh",
             "text": "Freshly prepared the day before delivery. Never frozen."
@@ -161,7 +179,7 @@
         "step_3": {
           "type": "step",
           "settings": {
-            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"3\" width=\"15\" height=\"13\"></rect><polygon points=\"16 8 20 8 23 11 23 16 16 16 16 8\"></polygon><circle cx=\"5.5\" cy=\"18.5\" r=\"2.5\"></circle><circle cx=\"18.5\" cy=\"18.5\" r=\"2.5\"></circle></svg>",
+            "custom_svg": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"3\" width=\"15\" height=\"13\"></rect><polygon points=\"16 8 20 8 23 11 23 16 16 16 16 8\"></polygon><circle cx=\"5.5\" cy=\"18.5\" r=\"2.5\"></circle><circle cx=\"18.5\" cy=\"18.5\" r=\"2.5\"></circle></svg>",
             "step_number": "",
             "title": "Delivered to you",
             "text": "Own delivery service in the Netherlands and Belgium. We deliver in Germany by mail. On the table in 5 minutes."
@@ -291,6 +309,7 @@
       "settings": {
         "background_color": "#ffffff",
         "caption": "",
+        "caption_color": "#6046b6",
         "heading": "Frequently Asked Questions",
         "heading_color": "#231f5c",
         "padding_top": 64,
