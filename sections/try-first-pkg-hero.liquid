@@ -227,7 +227,7 @@
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width:750px) {
     .landing-hero__features-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -237,6 +237,19 @@
       grid-template-columns: repeat(4, 1fr);
     }
   }
+
+    @media screen and (max-width:750px) {
+.landing-feature-item {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+  .landing-hero__features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    }
   .landing-feature-item {
     display: flex;
     align-items: center;
