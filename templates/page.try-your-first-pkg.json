@@ -260,62 +260,6 @@
         "padding_bottom": 64
       }
     },
-    "faq": {
-      "type": "custom-faq-split",
-      "blocks": {
-        "faq_1": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What's included in my Yasemin meal package?",
-            "answer": "<p>Each package contains freshly prepared authentic Turkish dishes crafted by our chefs. You can choose from over 60 rotating weekly options.</p>"
-          }
-        },
-        "faq_2": {
-          "type": "faq_item",
-          "settings": {
-            "question": "How fresh are the meals?",
-            "answer": "<p>Our meals are prepared fresh the day before delivery and cooled immediately. They are never frozen and stay fresh in your fridge for up to 5 days.</p>"
-          }
-        },
-        "faq_3": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Are the meals halal?",
-            "answer": "<p>Yes, 100% of our ingredients and meat are strictly certified halal.</p>"
-          }
-        },
-        "faq_4": {
-          "type": "faq_item",
-          "settings": {
-            "question": "How long do the meals stay fresh?",
-            "answer": "<p>When stored in the refrigerator upon arrival, our meals stay fresh and delicious for up to 5 days.</p>"
-          }
-        },
-        "faq_5": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Do you deliver throughout the Netherlands?",
-            "answer": "<p>Yes! We deliver across the Netherlands and Belgium with our own fast delivery service, and across Germany by mail.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4",
-        "faq_5"
-      ],
-      "settings": {
-        "background_color": "#ffffff",
-        "caption": "",
-        "caption_color": "#6046b6",
-        "heading": "Frequently Asked Questions",
-        "heading_color": "#231f5c",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
     "bottom_cta": {
       "type": "try-first-pkg-cta",
       "settings": {
@@ -337,7 +281,6 @@
     "try_first_pkg_menu",
     "how_it_works",
     "testimonials",
-    "faq",
     "bottom_cta"
   ]
 }
