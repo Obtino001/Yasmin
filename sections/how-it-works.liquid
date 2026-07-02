@@ -14,7 +14,7 @@
 
   .how-it-works {
     position: relative;
-    overflow-x: hidden; /* Prevents horizontal scroll from floating image */
+    overflow-x: hidden;
   }
 
   /* Floating Decorative Image */
@@ -39,15 +39,15 @@
 
   /* Header Styles */
   .how-it-works__header {
-    text-align: {{ section.settings.text_alignment | default: 'center' }};
+    text-align: {{ section.settings.header_alignment }};
     margin-bottom: 4rem;
     position: relative;
     z-index: 1;
     max-width: 800px;
-    {% if section.settings.text_alignment == 'center' %}
+    {% if section.settings.header_alignment == 'center' %}
       margin-left: auto;
       margin-right: auto;
-    {% elsif section.settings.text_alignment == 'right' %}
+    {% elsif section.settings.header_alignment == 'right' %}
       margin-left: auto;
     {% endif %}
   }
@@ -61,6 +61,7 @@
     color: #6046b6;
     margin-bottom: 1rem;
   }
+  
   .how-it-works__text {
     font-size: 1.4rem;
     color: #666666;
@@ -76,11 +77,21 @@
   .how-it-works__steps {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem; /* Tighter gap on mobile */
+    gap: 2.5rem;
     position: relative;
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  /* INDIVIDUAL STEP STYLES */
+  .how-it-works__step {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1.5rem;
+    position: relative;
   }
 
   /* Desktop Steps Layout */
@@ -88,39 +99,26 @@
     .how-it-works__steps {
       flex-direction: row;
       justify-content: space-between;
-      gap: 2rem;
+      gap: 2rem; /* The gap between steps */
     }
 
-    /* The Connecting Dashed Line */
-    .how-it-works__steps::before {
-      content: '';
-      position: absolute;
-      top: 40px; /* Half of the 80px icon box */
-      left: 12.5%;
-      width: 75%;
-      height: 0;
-      border-top: {{ section.settings.line_thickness | default: 3 }}px dashed {{ section.settings.line_color | default: '#442c6c' }};
-      z-index: 0;
-    }
-  }
-
-  /* INDIVIDUAL STEP STYLES */
-  .how-it-works__step {
-    display: flex;
-    flex-direction: row; /* Mobile: Side by side */
-    align-items: flex-start;
-    text-align: left;
-    gap: 1.5rem;
-  }
-
-  @media screen and (min-width: 750px) {
     .how-it-works__step {
       flex: 1;
-      flex-direction: column; /* Desktop: Stacked */
+      flex-direction: column;
       align-items: center;
-      text-align: center;
-      max-width: 280px;
-      margin: 0 auto;
+      text-align: {{ section.settings.step_alignment }};
+    }
+
+    /* THE CONNECTING LINE FIX */
+    /* Drawn dynamically from the center of one item to the center of the next */
+    .how-it-works__step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 40px; /* Exactly half of the 80px icon to center vertically */
+      left: 50%; /* Start exactly in the middle of the current icon */
+      width: calc(100% + 2rem); /* Span across the item and the exact gap width */
+      border-top: {{ section.settings.line_thickness }}px {{ section.settings.line_style }} {{ section.settings.line_color }};
+      z-index: 1;
     }
   }
 
@@ -128,20 +126,28 @@
     display: flex;
     flex-direction: column;
     gap: 7px;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .how-it-works__step-content {
+      align-items: {% if section.settings.step_alignment == 'left' %}flex-start{% elsif section.settings.step_alignment == 'right' %}flex-end{% else %}center{% endif %};
+      max-width: 280px;
+    }
   }
 
   .how-it-works__step-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 52px; /* Mobile size */
-    height: 52px; /* Mobile size */
+    width: 52px;
+    height: 52px;
     background-color: #614193;
     border-radius: 10px;
     color: #ffffff;
     flex-shrink: 0;
     position: relative;
-    z-index: 2;
+    z-index: 2; /* Keeps icon above the connecting line */
   }
 
   @media screen and (min-width: 750px) {
@@ -259,6 +265,10 @@
       "info": "Upload the transparent PNG (e.g., chili peppers) to float on the right edge."
     },
     {
+      "type": "header",
+      "content": "Header Text"
+    },
+    {
       "type": "text",
       "id": "caption",
       "label": "Caption",
@@ -278,27 +288,29 @@
     },
     {
       "type": "select",
-      "id": "text_alignment",
-      "label": "Text alignment",
+      "id": "header_alignment",
+      "label": "Header alignment",
       "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
       ],
       "default": "center"
     },
     {
       "type": "header",
-      "content": "Connecting Dashed Line"
+      "content": "Connecting Line"
+    },
+    {
+      "type": "select",
+      "id": "line_style",
+      "label": "Connecting Line Style",
+      "options": [
+        { "value": "dashed", "label": "Dashed" },
+        { "value": "solid", "label": "Solid" },
+        { "value": "dotted", "label": "Dotted" }
+      ],
+      "default": "dashed"
     },
     {
       "type": "range",
@@ -307,18 +319,33 @@
       "max": 6,
       "step": 1,
       "unit": "px",
-      "label": "Connecting dashed line thickness (px)",
+      "label": "Line thickness",
       "default": 3
     },
     {
       "type": "color",
       "id": "line_color",
-      "label": "Connecting line color",
+      "label": "Line color",
       "default": "#442c6c"
     },
     {
       "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
+      "content": "Step Content"
+    },
+    {
+      "type": "select",
+      "id": "step_alignment",
+      "label": "Step text alignment (Desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
     },
     {
       "type": "range",
@@ -327,7 +354,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
+      "label": "Top padding",
       "default": 80
     },
     {
@@ -337,7 +364,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
+      "label": "Bottom padding",
       "default": 80
     }
   ],
@@ -345,7 +372,7 @@
     {
       "type": "step",
       "name": "Step Item",
-      "limit": 4,
+      "limit": 6,
       "settings": [
         {
           "type": "html",
@@ -356,7 +383,7 @@
         {
           "type": "text",
           "id": "step_number",
-          "label": "Step Number",
+          "label": "Step Number (Optional)",
           "default": "01"
         },
         {
@@ -381,36 +408,27 @@
         {
           "type": "step",
           "settings": {
-            "step_number": "01",
-            "title": "Choose Your Plan",
-            "text": "One-time, weekly, or subscribe and save up to 15%.",
-            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"21\" r=\"1\"></circle><circle cx=\"20\" cy=\"21\" r=\"1\"></circle><path d=\"M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6\"></path></svg>"
+            "step_number": "",
+            "title": "Choose your meals",
+            "text": "Choose from 60+ authentic Turkish dishes — changing weekly.",
+            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 8h1a4 4 0 0 1 0 8h-1\"></path><path d=\"M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z\"></path><line x1=\"6\" y1=\"1\" x2=\"6\" y2=\"4\"></line><line x1=\"10\" y1=\"1\" x2=\"10\" y2=\"4\"></line><line x1=\"14\" y1=\"1\" x2=\"14\" y2=\"4\"></line></svg>"
           }
         },
         {
           "type": "step",
           "settings": {
-            "step_number": "02",
-            "title": "Select Your Meals",
-            "text": "Pick from 60+ authentic Turkish dishes each week.",
-            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"></path><path d=\"M7 2v20\"></path><path d=\"M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\"></path></svg>"
-          }
-        },
-        {
-          "type": "step",
-          "settings": {
-            "step_number": "03",
-            "title": "We Cook it Fresh",
-            "text": "Prepared fresh the day before delivery. Never frozen.",
+            "step_number": "",
+            "title": "We prepare fresh",
+            "text": "Freshly prepared the day before delivery. Never frozen.",
             "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z\"></path><line x1=\"6\" y1=\"17\" x2=\"18\" y2=\"17\"></line></svg>"
           }
         },
         {
           "type": "step",
           "settings": {
-            "step_number": "04",
-            "title": "Delivered to You",
-            "text": "Own-fleet delivery across NL, DE and BE.",
+            "step_number": "",
+            "title": "Delivered to you",
+            "text": "Own delivery service in the Netherlands and Belgium. We deliver in Germany by mail.",
             "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"3\" width=\"15\" height=\"13\"></rect><polygon points=\"16 8 20 8 23 11 23 16 16 16 16 8\"></polygon><circle cx=\"5.5\" cy=\"18.5\" r=\"2.5\"></circle><circle cx=\"18.5\" cy=\"18.5\" r=\"2.5\"></circle></svg>"
           }
         }
