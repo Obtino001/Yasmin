@@ -42,14 +42,6 @@
     }
   }
 
-  .custom-faq-heading {
-    text-align: center;
-    color: #1c194f;
-    margin-bottom: 4rem;
-    font-size: clamp(2.4rem, 4vw, 3.6rem);
-    font-weight: bold;
-  }
-
   .faq-item {
     border-bottom: 1px solid #eaeaea;
   }
@@ -126,7 +118,7 @@
 
   <div class="custom-faq-wrapper">
     {%- if section.settings.title != blank -%}
-      <h2 class="custom-faq-heading">{{ section.settings.title }}</h2>
+      <h2 class="custom-faq-heading h1">{{ section.settings.title }}</h2>
     {%- endif -%}
 
     <div class="custom-faq-accordion" itemscope itemtype="https://schema.org/FAQPage">
