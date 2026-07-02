@@ -41,7 +41,12 @@
           }
         }
       },
-      "block_order": ["feature_1", "feature_2", "feature_3", "feature_4"],
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ],
       "settings": {
         "color_scheme": "background-1",
         "show_announcement": true,
@@ -184,7 +189,11 @@
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3"],
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
       "settings": {
         "background_color": "#ffffff",
         "caption": "",
@@ -239,7 +248,12 @@
           }
         }
       },
-      "block_order": ["review_1", "review_2", "review_3", "review_4"],
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ],
       "settings": {
         "heading": "Loved by customers",
         "overall_score": "4.8",
@@ -250,6 +264,61 @@
         "pause_on_hover": true,
         "color_scheme": "scheme-4",
         "accent_color": "#ff007f",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "try_first_pkg_faq_PXne7b": {
+      "type": "try-first-pkg-faq",
+      "blocks": {
+        "faq_kHpV8f": {
+          "type": "faq",
+          "settings": {
+            "question": "What's included in my Yasemin meal package?",
+            "answer": "<p>Each package contains freshly prepared authentic Turkish dishes crafted by our chefs. You can choose from over 60 rotating weekly options.</p>"
+          }
+        },
+        "faq_H4Cteh": {
+          "type": "faq",
+          "settings": {
+            "question": "How fresh are the meals?",
+            "answer": "<p>Our meals are prepared fresh the day before delivery and cooled immediately. They are never frozen and stay fresh in your fridge for up to 5 days.</p>"
+          }
+        },
+        "faq_ewyMm8": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the meals halal?",
+            "answer": "<p>Yes, 100% of our ingredients and meat are strictly certified halal.</p>"
+          }
+        },
+        "faq_BCnQqt": {
+          "type": "faq",
+          "settings": {
+            "question": "How long do the meals stay fresh?",
+            "answer": "<p>When stored in the refrigerator upon arrival, our meals stay fresh and delicious for up to 5 days.</p>"
+          }
+        },
+        "faq_dGJ7NH": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you deliver throughout the Netherlands?",
+            "answer": "<p>Yes! We deliver across the Netherlands and Belgium with our own fast delivery service, and across Germany by mail.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_kHpV8f",
+        "faq_H4Cteh",
+        "faq_ewyMm8",
+        "faq_BCnQqt",
+        "faq_dGJ7NH"
+      ],
+      "name": "Custom FAQ",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "background_color": "#ffffff",
+        "floating_image": "shopify://shop_images/e27ded7b3d89a0bd9e7529956f1124457a1c8686.png",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -275,6 +344,7 @@
     "try_first_pkg_menu",
     "how_it_works",
     "testimonials",
+    "try_first_pkg_faq_PXne7b",
     "bottom_cta"
   ]
 }
