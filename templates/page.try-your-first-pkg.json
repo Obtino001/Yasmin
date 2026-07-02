@@ -41,12 +41,7 @@
           }
         }
       },
-      "block_order": [
-        "feature_1",
-        "feature_2",
-        "feature_3",
-        "feature_4"
-      ],
+      "block_order": ["feature_1", "feature_2", "feature_3", "feature_4"],
       "settings": {
         "color_scheme": "background-1",
         "show_announcement": true,
@@ -62,7 +57,10 @@
         "header_bg_color": "#ffffff",
         "header_btn_bg": "#231f5c",
         "header_btn_color": "#ffffff",
-        "hero_image": "shopify://shop_images/Guvec_1.png",
+        "hero_video": "shopify://files/videos/Def voor social (1).mp4",
+        "hero_video_url": "",
+        "desktop_height": 540,
+        "mobile_height": 400,
         "overlay_opacity": 45,
         "rating_stars": "★★★★★",
         "rating_text": "Rated 4.5 / 5 (2000+)",
@@ -186,16 +184,17 @@
           }
         }
       },
-      "block_order": [
-        "step_1",
-        "step_2",
-        "step_3"
-      ],
+      "block_order": ["step_1", "step_2", "step_3"],
       "settings": {
         "background_color": "#ffffff",
         "caption": "",
         "heading": "You order, we do the rest",
         "text": "From kitchen to door fresh, halal, and on the table within minutes.",
+        "header_alignment": "center",
+        "line_style": "dashed",
+        "line_thickness": 3,
+        "line_color": "#442c6c",
+        "step_alignment": "center",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -240,12 +239,7 @@
           }
         }
       },
-      "block_order": [
-        "review_1",
-        "review_2",
-        "review_3",
-        "review_4"
-      ],
+      "block_order": ["review_1", "review_2", "review_3", "review_4"],
       "settings": {
         "heading": "Loved by customers",
         "overall_score": "4.8",
@@ -260,41 +254,27 @@
         "padding_bottom": 64
       }
     },
-    "faq": {
-      "type": "try-first-pkg-faq",
-      "blocks": {
-        "faq_1": {
-          "type": "faq",
-          "settings": {
-            "question": "What's included in my Yasemin meal package?",
-            "answer": "<p>Each package contains freshly prepared authentic Turkish dishes crafted by our chefs. You can choose from over 60 rotating weekly options.</p>"
-          }
-        },
-        "faq_2": {
-          "type": "faq",
-          "settings": {
-            "question": "How fresh are the meals?",
-            "answer": "<p>Our meals are prepared fresh the day before delivery and cooled immediately. They are never frozen and stay fresh in your fridge for up to 5 days.</p>"
-          }
-        },
-        "faq_3": {
-          "type": "faq",
-          "settings": {
-            "question": "Are the meals halal?",
-            "answer": "<p>Yes, 100% of our ingredients and meat are strictly certified halal.</p>"
-          }
-        },
-        "faq_4": {
-          "type": "faq",
-          "settings": {
-            "question": "How long do the meals stay fresh?",
-            "answer": "<p>When stored in the refrigerator upon arrival, our meals stay fresh and delicious for up to 5 days.</p>"
-          }
-        },
-        "faq_5": {
-          "type": "faq",
-          "settings": {
-    "faq",
+    "bottom_cta": {
+      "type": "try-first-pkg-cta",
+      "settings": {
+        "color_scheme": "background-1",
+        "box_bg_color": "#f6f5f0",
+        "heading": "Start Enjoying Homemade Turkish Meals Today",
+        "subheading": "FIRST PACKAGE €50",
+        "button_label": "CLAIM MY OFFER",
+        "button_link": "#order",
+        "button_bg_color": "#231f5c",
+        "button_text_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "try_first_pkg_hero",
+    "try_first_pkg_menu",
+    "how_it_works",
+    "testimonials",
     "bottom_cta"
   ]
 }
