@@ -260,27 +260,41 @@
         "padding_bottom": 64
       }
     },
-    "bottom_cta": {
-      "type": "try-first-pkg-cta",
-      "settings": {
-        "color_scheme": "background-1",
-        "box_bg_color": "#f6f5f0",
-        "heading": "Start Enjoying Homemade Turkish Meals Today",
-        "subheading": "FIRST PACKAGE €50",
-        "button_label": "CLAIM MY OFFER",
-        "button_link": "#order",
-        "button_bg_color": "#231f5c",
-        "button_text_color": "#ffffff",
-        "padding_top": 40,
-        "padding_bottom": 64
-      }
-    }
-  },
-  "order": [
-    "try_first_pkg_hero",
-    "try_first_pkg_menu",
-    "how_it_works",
-    "testimonials",
+    "faq": {
+      "type": "try-first-pkg-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "What's included in my Yasemin meal package?",
+            "answer": "<p>Each package contains freshly prepared authentic Turkish dishes crafted by our chefs. You can choose from over 60 rotating weekly options.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "How fresh are the meals?",
+            "answer": "<p>Our meals are prepared fresh the day before delivery and cooled immediately. They are never frozen and stay fresh in your fridge for up to 5 days.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the meals halal?",
+            "answer": "<p>Yes, 100% of our ingredients and meat are strictly certified halal.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "How long do the meals stay fresh?",
+            "answer": "<p>When stored in the refrigerator upon arrival, our meals stay fresh and delicious for up to 5 days.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+    "faq",
     "bottom_cta"
   ]
 }

@@ -3,6 +3,8 @@
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
     background-color: {{ section.settings.background_color }};
+    position: relative;
+    overflow-x: hidden;
   }
 
   @media screen and (min-width: 750px) {
@@ -16,6 +18,28 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .try-first-pkg-faq__floating-img {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    max-height: 90%;
+    width: auto;
+    max-width: 350px;
+    object-fit: contain;
+    object-position: right center;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @media screen and (max-width: 990px) {
+    .try-first-pkg-faq__floating-img {
+      display: none;
+    }
   }
 
   .custom-faq-heading {
@@ -89,6 +113,17 @@
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding">
+  {%- if section.settings.floating_image != blank -%}
+    <img
+      src="{{ section.settings.floating_image | image_url: width: 800 }}"
+      alt=""
+      class="try-first-pkg-faq__floating-img"
+      width="400"
+      height="600"
+      loading="lazy"
+    >
+  {%- endif -%}
+
   <div class="custom-faq-wrapper">
     {%- if section.settings.title != blank -%}
       <h2 class="custom-faq-heading">{{ section.settings.title }}</h2>
@@ -168,6 +203,12 @@
       "id": "background_color",
       "label": "Background Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "floating_image",
+      "label": "Right Edge Floating Image",
+      "info": "Upload a transparent PNG image (e.g. chili peppers) to float on the right side on desktop. Automatically hidden on mobile."
     },
     {
       "type": "header",
