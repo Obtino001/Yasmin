@@ -152,7 +152,7 @@
         "banner_title": "Ready to skip cooking this week?",
         "banner_text": "Get Your First Yasemin Package For €50",
         "button_label": "Order Now",
-        "button_link": "shopify://pages/how-its-work",
+        "button_link": "#order",
         "banner_color_scheme": "background-2",
         "padding_top": 36,
         "padding_bottom": 36
