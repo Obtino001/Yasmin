@@ -1,0 +1,230 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    background-color: {{ section.settings.background_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .custom-faq-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .custom-faq-heading {
+    text-align: center;
+    color: #1c194f;
+    margin-bottom: 4rem;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: bold;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .faq-item:first-child {
+    border-top: 1px solid #eaeaea;
+  }
+
+  .faq-question {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.6rem;
+    color: #1c194f;
+    font-weight: 500;
+  }
+
+  .faq-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: #1c194f;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .faq-icon-minus { display: none; }
+  .faq-icon-plus { display: block; }
+
+  .faq-item.is-active .faq-icon-plus { display: none; }
+  .faq-item.is-active .faq-icon-minus { display: block; }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq-answer-inner {
+    padding-bottom: 2rem;
+    color: #4a4a4a;
+    font-size: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .faq-answer-inner p {
+    margin: 0;
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding">
+  <div class="custom-faq-wrapper">
+    {%- if section.settings.title != blank -%}
+      <h2 class="custom-faq-heading">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    <div class="custom-faq-accordion" itemscope itemtype="https://schema.org/FAQPage">
+      {%- for block in section.blocks -%}
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" {{ block.shopify_attributes }}>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-{{ block.id }}">
+            <span itemprop="name">{{ block.settings.question }}</span>
+            <div class="faq-icon">
+              <svg class="faq-icon-plus" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <svg class="faq-icon-minus" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-answer" id="faq-answer-{{ block.id }}" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="faq-answer-inner" itemprop="text">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqButtons = document.querySelectorAll('.faq-question');
+
+    faqButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const item = this.closest('.faq-item');
+        const answer = item.querySelector('.faq-answer');
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+        document.querySelectorAll('.faq-item.is-active').forEach(activeItem => {
+          if (activeItem !== item) {
+            activeItem.classList.remove('is-active');
+            activeItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            activeItem.querySelector('.faq-answer').style.maxHeight = null;
+          }
+        });
+
+        if (isExpanded) {
+          this.setAttribute('aria-expanded', 'false');
+          item.classList.remove('is-active');
+          answer.style.maxHeight = null;
+        } else {
+          this.setAttribute('aria-expanded', 'true');
+          item.classList.add('is-active');
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Frequently Asked Questions",
+      "label": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "default": "What's included in my meal package?",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "default": "<p>Provide the answer to the frequently asked question here.</p>",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "What's included in my Yasemin meal package?", "answer": "<p>Each package contains freshly prepared authentic Turkish dishes crafted by our chefs. You can choose from over 60 rotating weekly options.</p>" } },
+        { "type": "faq", "settings": { "question": "How fresh are the meals?", "answer": "<p>Our meals are prepared fresh the day before delivery and cooled immediately. They are never frozen and stay fresh in your fridge for up to 5 days.</p>" } },
+        { "type": "faq", "settings": { "question": "Are the meals halal?", "answer": "<p>Yes, 100% of our ingredients and meat are strictly certified halal.</p>" } },
+        { "type": "faq", "settings": { "question": "How long do the meals stay fresh?", "answer": "<p>When stored in the refrigerator upon arrival, our meals stay fresh and delicious for up to 5 days.</p>" } },
+        { "type": "faq", "settings": { "question": "Do you deliver throughout the Netherlands?", "answer": "<p>Yes! We deliver across the Netherlands and Belgium with our own fast delivery service, and across Germany by mail.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
