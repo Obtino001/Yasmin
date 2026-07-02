@@ -59,17 +59,50 @@
     opacity: 0.7;
   }
 
-  @media screen and (min-width: 750px) {
+  {% if section.settings.header_alignment == 'center' %}
     .custom-testimonials__header {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 1.5rem !important;
     }
-    
     .custom-testimonials__overall {
-      text-align: right;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 0.5rem !important;
     }
-  }
+    .custom-testimonials__overall-right {
+      align-items: center !important;
+    }
+  {% elsif section.settings.header_alignment == 'left' %}
+    .custom-testimonials__header {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      text-align: left !important;
+      gap: 1.5rem !important;
+    }
+    .custom-testimonials__overall {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      text-align: left !important;
+      gap: 0.5rem !important;
+    }
+    .custom-testimonials__overall-right {
+      align-items: flex-start !important;
+    }
+  {% else %}
+    @media screen and (min-width: 750px) {
+      .custom-testimonials__header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+      .custom-testimonials__overall {
+        text-align: right;
+      }
+    }
+  {% endif %}
 
   /* -------------------------
      PURE CSS MARQUEE SLIDER 
@@ -282,6 +315,17 @@
       "id": "heading",
       "label": "Heading",
       "default": "Loved Across the Diaspora"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header Alignment",
+      "options": [
+        { "value": "center", "label": "Center Stacked" },
+        { "value": "split", "label": "Split (Left Heading, Right Rating)" },
+        { "value": "left", "label": "Left Stacked" }
+      ],
+      "default": "center"
     },
     {
       "type": "header",
