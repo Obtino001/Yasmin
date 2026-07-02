@@ -301,6 +301,11 @@
         "caption": "hoe het werkt",
         "heading": "Jij bestelt, wij doen de rest",
         "text": "Van keuken tot deur vers, halal, en binnen minuten op tafel.",
+        "header_alignment": "center",
+        "line_style": "dashed",
+        "line_thickness": 3,
+        "line_color": "#442c6c",
+        "step_alignment": "center",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -554,6 +559,7 @@
       "name": "Custom Testimonials",
       "settings": {
         "heading": "Geliefd door onze klanten",
+        "header_alignment": "split",
         "overall_score": "4.8",
         "overall_text": "op basis van 2.500+ beoordelingen",
         "marquee_speed": 30,
