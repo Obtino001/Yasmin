@@ -14,11 +14,18 @@
   .landing-cta-box {
     background-color: {{ section.settings.box_bg_color }};
     border-radius: 24px;
-    padding: 5rem 3rem;
+    padding: 4.5rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
-    align-items: flex-start;
+    gap: 2.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .landing-cta-box__right {
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 
   @media screen and (min-width: 900px) {
@@ -26,7 +33,11 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      text-align: left;
       padding: 6rem 5rem;
+    }
+    .landing-cta-box__right {
+      width: auto;
     }
   }
 

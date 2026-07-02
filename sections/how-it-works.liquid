@@ -94,6 +94,41 @@
     position: relative;
   }
 
+  @media screen and (max-width: 749px) {
+    .how-it-works__header {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .how-it-works__steps {
+      gap: 4.5rem;
+    }
+
+    .how-it-works__step {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.2rem;
+    }
+
+    .how-it-works__step-content {
+      align-items: center;
+    }
+
+    .how-it-works__step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      bottom: -3.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3.2rem;
+      border-left: {{ section.settings.line_thickness }}px {{ section.settings.line_style }} {{ section.settings.line_color }};
+      z-index: 1;
+    }
+  }
+
   /* Desktop Steps Layout */
   @media screen and (min-width: 750px) {
     .how-it-works__steps {
@@ -140,10 +175,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
-    background-color: #614193;
-    border-radius: 10px;
+    width: 68px;
+    height: 68px;
+    background-color: #231f5c;
+    border-radius: 14px;
     color: #ffffff;
     flex-shrink: 0;
     position: relative;
@@ -154,7 +189,7 @@
     .how-it-works__step-icon {
       width: 80px;
       height: 80px;
-      border-radius: 12px;
+      border-radius: 16px;
     }
   }
 

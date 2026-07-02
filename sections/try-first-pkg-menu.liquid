@@ -146,6 +146,18 @@
       filter: none;
     }
   }
+
+  @media screen and (max-width: 749px) {
+    .grid--2-col .grid__item {
+      width: calc(50% - var(--grid-mobile-horizontal-spacing) / 2) !important;
+      max-width: calc(50% - var(--grid-mobile-horizontal-spacing) / 2) !important;
+    }
+    
+    .dish-card__title {
+      font-size: 1.4rem;
+      margin-top: 1rem;
+    }
+  }
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient isolate">
