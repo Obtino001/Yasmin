@@ -17,7 +17,7 @@
 
   .weekly-menu-title {
     color: #231f5c;
-    font-size: clamp(2.8rem, 4vw, 3.8rem);
+    font-size: clamp(2.8rem, 4vw,4rem);
     font-weight: 800;
     text-align: center;
     margin-bottom: 3.5rem;
@@ -157,7 +157,7 @@
       </h2>
     {%- endif -%}
 
-    <ul class="grid grid--1-col grid--2-col-tablet grid--4-col-desktop" role="list">
+    <ul class="grid grid--2-col-tablet grid--4-col-desktop" role="list">
       {%- for block in section.blocks -%}
         <li class="grid__item" {{ block.shopify_attributes }}>
           {%- if block.settings.product != blank -%}
