@@ -75,7 +75,6 @@
 
   .weekly-menu-banner h2 {
     color: #26215C;
-    font-size: clamp(2.4rem, 3.5vw, 4rem);
     font-weight: 600;
     margin: 0 0 1rem;
   }
@@ -219,7 +218,7 @@
     </ul>
 
     {%- if section.settings.show_banner -%}
-      <div class="weekly-menu-banner color-{{ section.settings.banner_color_scheme }} gradient">
+      <div class="weekly-menu-banner h2 color-{{ section.settings.banner_color_scheme }} gradient">
         {%- if section.settings.banner_title != blank -%}
           <h2>{{ section.settings.banner_title }}</h2>
         {%- endif -%}

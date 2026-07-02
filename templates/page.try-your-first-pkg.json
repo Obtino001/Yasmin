@@ -204,7 +204,7 @@
         "line_thickness": 3,
         "line_color": "#442c6c",
         "step_alignment": "center",
-        "padding_top": 0,
+        "padding_top": 60,
         "padding_bottom": 60
       }
     },
