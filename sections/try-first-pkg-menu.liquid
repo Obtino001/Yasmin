@@ -1,0 +1,318 @@
+{{ 'component-grid.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .weekly-menu-title {
+    color: #231f5c;
+    font-size: clamp(2.8rem, 4vw, 3.8rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .dish-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  .dish-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .dish-card__media {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: #f4f3ef;
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .dish-card__media img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+  .dish-card:hover .dish-card__media img {
+    transform: scale(1.05);
+  }
+
+  .dish-card__title {
+    color: #231f5c;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 1.4rem;
+    text-align: center;
+  }
+
+  .weekly-menu-banner {
+    margin-top: 5rem;
+    padding: 5rem 2.5rem;
+    text-align: center;
+    border-radius: 24px;
+    background-color: #f6f5f0;
+    color: #231f5c;
+  }
+
+  .weekly-menu-banner h2 {
+    color: #231f5c;
+    font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+    font-weight: 800;
+    margin: 0 0 1rem;
+  }
+
+  .weekly-menu-banner .banner-subtext {
+    margin: 0 0 2.5rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #55536e;
+  }
+
+  .weekly-menu-banner__btn {
+    background-color: #231f5c;
+    color: #ffffff;
+    padding: 15px 36px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 15px rgba(35, 31, 92, 0.2);
+  }
+  .weekly-menu-banner__btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient isolate">
+  <div class="page-width section-{{ section.id }}-padding">
+    
+    {%- if section.settings.title != blank -%}
+      <h2 class="weekly-menu-title">
+        {{ section.settings.title }}
+      </h2>
+    {%- endif -%}
+
+    <ul class="grid grid--1-col grid--2-col-tablet grid--4-col-desktop" role="list">
+      {%- for block in section.blocks -%}
+        <li class="grid__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.product != blank -%}
+            {% assign prod = block.settings.product %}
+            <a href="{{ prod.url | default: '#' }}" class="dish-card">
+              <div class="dish-card__media">
+                {%- if prod.featured_image != blank -%}
+                  <img
+                    src="{{ prod.featured_image | image_url: width: 600 }}"
+                    alt="{{ prod.title | escape }}"
+                    width="400"
+                    height="400"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <span class="dish-card__title">{{ prod.title | default: block.settings.custom_title }}</span>
+            </a>
+          {%- else -%}
+            <div class="dish-card">
+              <div class="dish-card__media">
+                {%- if block.settings.custom_image != blank -%}
+                  <img
+                    src="{{ block.settings.custom_image | image_url: width: 600 }}"
+                    alt="{{ block.settings.custom_title | escape }}"
+                    width="400"
+                    height="400"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0680/1653/7841/files/20790bbd2709fda956dd58d1f5ec00c18cbfd86c.jpg?v=1710000000"
+                    alt="Chicken Dish"
+                    width="400"
+                    height="400"
+                    style="border-radius: 50%; object-fit: cover;"
+                  >
+                {%- endif -%}
+              </div>
+              <span class="dish-card__title">{{ block.settings.custom_title | default: 'Chicken Dish' }}</span>
+            </div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if section.settings.show_banner -%}
+      <div class="weekly-menu-banner color-{{ section.settings.banner_color_scheme }} gradient">
+        {%- if section.settings.banner_title != blank -%}
+          <h2>{{ section.settings.banner_title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.banner_text != blank -%}
+          <p class="banner-subtext">{{ section.settings.banner_text }}</p>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: '#order' }}" class="weekly-menu-banner__btn">
+            {{ section.settings.button_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Weekly Menu",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "This Week’s Menu",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Main color scheme",
+      "default": "background-1"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Banner"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "default": true,
+      "label": "Show bottom banner"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "banner_title",
+      "default": "Ready to skip cooking this week?",
+      "label": "Banner heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "banner_text",
+      "default": "Get Your First Yasemin Package For €50",
+      "label": "Banner subtext"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Order Now",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "banner_color_scheme",
+      "label": "Banner color scheme",
+      "default": "background-2"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "dish",
+      "name": "Dish",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Dish Title",
+          "default": "Chicken Dish"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Dish Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Weekly Menu",
+      "blocks": [
+        { "type": "dish", "settings": { "custom_title": "Chicken Dish" } },
+        { "type": "dish", "settings": { "custom_title": "Chicken Dish" } },
+        { "type": "dish", "settings": { "custom_title": "Chicken Dish" } },
+        { "type": "dish", "settings": { "custom_title": "Chicken Dish" } },
+        { "type": "dish", "settings": { "custom_title": "Chicken Dish" } },
+        { "type": "dish", "settings": { "custom_title": "Chicken Dish" } },
+        { "type": "dish", "settings": { "custom_title": "Chicken Dish" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

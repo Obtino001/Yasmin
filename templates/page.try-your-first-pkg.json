@@ -1,0 +1,324 @@
+{
+  "sections": {
+    "try_first_pkg_hero": {
+      "type": "try-first-pkg-hero",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "100% Halal certified"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "snowflake",
+            "title": "Never frozen"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "Owned Fast delivery service"
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "clock",
+            "title": "Fresh daily"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "show_announcement": true,
+        "announcement_text": "Try your first Yasemin package for only €50",
+        "announcement_link_text": "Order now",
+        "announcement_link": "#order",
+        "announcement_bg_color": "#000000",
+        "announcement_text_color": "#ffffff",
+        "logo_width": 140,
+        "header_btn_text": "Order Now",
+        "header_btn_link": "#order",
+        "header_bg_color": "#ffffff",
+        "header_btn_bg": "#231f5c",
+        "header_btn_color": "#ffffff",
+        "overlay_opacity": 45,
+        "rating_stars": "★★★★★",
+        "rating_text": "Rated 4.5 / 5 (2000+)",
+        "heading": "Fresh Turkish Meals, Delivered To Your Door",
+        "subheading": "Authentic home-cooked meals ready in minutes",
+        "hero_btn_text": "TRY YOUR FIRST PACKAGE €50",
+        "hero_btn_link": "#order",
+        "hero_offer_text": "Special First Order Offer",
+        "hero_btn_bg": "#ffffff",
+        "hero_btn_color": "#231f5c",
+        "features_bg_color": "#231f5c",
+        "features_text_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 36
+      }
+    },
+    "try_first_pkg_menu": {
+      "type": "try-first-pkg-menu",
+      "blocks": {
+        "dish_1": {
+          "type": "dish",
+          "settings": {
+            "custom_title": "Chicken Dish"
+          }
+        },
+        "dish_2": {
+          "type": "dish",
+          "settings": {
+            "custom_title": "Chicken Dish"
+          }
+        },
+        "dish_3": {
+          "type": "dish",
+          "settings": {
+            "custom_title": "Chicken Dish"
+          }
+        },
+        "dish_4": {
+          "type": "dish",
+          "settings": {
+            "custom_title": "Chicken Dish"
+          }
+        },
+        "dish_5": {
+          "type": "dish",
+          "settings": {
+            "custom_title": "Chicken Dish"
+          }
+        },
+        "dish_6": {
+          "type": "dish",
+          "settings": {
+            "custom_title": "Chicken Dish"
+          }
+        },
+        "dish_7": {
+          "type": "dish",
+          "settings": {
+            "custom_title": "Chicken Dish"
+          }
+        }
+      },
+      "block_order": [
+        "dish_1",
+        "dish_2",
+        "dish_3",
+        "dish_4",
+        "dish_5",
+        "dish_6",
+        "dish_7"
+      ],
+      "settings": {
+        "title": "This Week’s Menu",
+        "heading_size": "h1",
+        "color_scheme": "background-1",
+        "show_banner": true,
+        "banner_title": "Ready to skip cooking this week?",
+        "banner_text": "Get Your First Yasemin Package For €50",
+        "button_label": "Order Now",
+        "button_link": "#order",
+        "banner_color_scheme": "background-2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "how_it_works": {
+      "type": "how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 8h1a4 4 0 0 1 0 8h-1\"></path><path d=\"M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z\"></path><line x1=\"6\" y1=\"1\" x2=\"6\" y2=\"4\"></line><line x1=\"10\" y1=\"1\" x2=\"10\" y2=\"4\"></line><line x1=\"14\" y1=\"1\" x2=\"14\" y2=\"4\"></line></svg>",
+            "step_number": "",
+            "title": "Choose your meals",
+            "text": "Choose from 60+ authentic Turkish dishes — changing weekly."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z\"></path><line x1=\"6\" y1=\"17\" x2=\"18\" y2=\"17\"></line></svg>",
+            "step_number": "",
+            "title": "We prepare fresh",
+            "text": "Freshly prepared the day before delivery. Never frozen."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "custom_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"3\" width=\"15\" height=\"13\"></rect><polygon points=\"16 8 20 8 23 11 23 16 16 16 16 8\"></polygon><circle cx=\"5.5\" cy=\"18.5\" r=\"2.5\"></circle><circle cx=\"18.5\" cy=\"18.5\" r=\"2.5\"></circle></svg>",
+            "step_number": "",
+            "title": "Delivered to you",
+            "text": "Own delivery service in the Netherlands and Belgium. We deliver in Germany by mail. On the table in 5 minutes."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "caption": "",
+        "heading": "You order, we do the rest",
+        "text": "From kitchen to door fresh, halal, and on the table within minutes.",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "testimonials": {
+      "type": "custom-testimonials",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "author_name": "Ervin T.",
+            "verified_text": "Verified order",
+            "review_text": "\"Finally a service that tastes exactly like my mother's cooking. Karnıyarık was perfect. Highly recommend the subscription!\"",
+            "date": "28.06.2026"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "author_name": "Ervin T.",
+            "verified_text": "Verified order",
+            "review_text": "\"Finally a service that tastes exactly like my mother's cooking. Karnıyarık was perfect. Highly recommend the subscription!\"",
+            "date": "28.06.2026"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "author_name": "Ervin T.",
+            "verified_text": "Verified order",
+            "review_text": "\"Finally a service that tastes exactly like my mother's cooking. Karnıyarık was perfect. Highly recommend the subscription!\"",
+            "date": "28.06.2026"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "author_name": "Ervin T.",
+            "verified_text": "Verified order",
+            "review_text": "\"Finally a service that tastes exactly like my mother's cooking. Karnıyarık was perfect. Highly recommend the subscription!\"",
+            "date": "28.06.2026"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ],
+      "settings": {
+        "heading": "Loved by customers",
+        "overall_score": "4.8",
+        "overall_text": "Based on 2,500 reviews",
+        "marquee_speed": 30,
+        "card_gap": 24,
+        "fade_width": 100,
+        "pause_on_hover": true,
+        "color_scheme": "scheme-4",
+        "accent_color": "#ff007f",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "faq": {
+      "type": "custom-faq-split",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's included in my Yasemin meal package?",
+            "answer": "<p>Each package contains freshly prepared authentic Turkish dishes crafted by our chefs. You can choose from over 60 rotating weekly options.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How fresh are the meals?",
+            "answer": "<p>Our meals are prepared fresh the day before delivery and cooled immediately. They are never frozen and stay fresh in your fridge for up to 5 days.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are the meals halal?",
+            "answer": "<p>Yes, 100% of our ingredients and meat are strictly certified halal.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long do the meals stay fresh?",
+            "answer": "<p>When stored in the refrigerator upon arrival, our meals stay fresh and delicious for up to 5 days.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you deliver throughout the Netherlands?",
+            "answer": "<p>Yes! We deliver across the Netherlands and Belgium with our own fast delivery service, and across Germany by mail.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "caption": "",
+        "heading": "Frequently Asked Questions",
+        "heading_color": "#231f5c",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "bottom_cta": {
+      "type": "try-first-pkg-cta",
+      "settings": {
+        "color_scheme": "background-1",
+        "box_bg_color": "#f6f5f0",
+        "heading": "Start Enjoying Homemade Turkish Meals Today",
+        "subheading": "FIRST PACKAGE €50",
+        "button_label": "CLAIM MY OFFER",
+        "button_link": "#order",
+        "button_bg_color": "#231f5c",
+        "button_text_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "try_first_pkg_hero",
+    "try_first_pkg_menu",
+    "how_it_works",
+    "testimonials",
+    "faq",
+    "bottom_cta"
+  ]
+}
