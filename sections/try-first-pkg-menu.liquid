@@ -30,6 +30,7 @@
     text-decoration: none;
     transition: transform 0.2s ease;
   }
+  
   .dish-card:hover {
     transform: translateY(-4px);
   }
@@ -37,21 +38,20 @@
   .dish-card__media {
     width: 100%;
     aspect-ratio: 1;
-    background-color: #f4f3ef;
     border-radius: 20px;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
     position: relative;
+    /* Background color and padding removed for full-width image */
   }
+  
   .dish-card__media img {
-    width: 90%;
-    height: 90%;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fills the container cleanly */
     transition: transform 0.3s ease;
+    border-radius: 20px; /* Applies radius directly to the image */
   }
+  
   .dish-card:hover .dish-card__media img {
     transform: scale(1.05);
   }
@@ -99,6 +99,7 @@
     transition: transform 0.2s, opacity 0.2s;
     box-shadow: 0 4px 15px rgba(35, 31, 92, 0.2);
   }
+  
   .weekly-menu-banner__btn:hover {
     transform: translateY(-2px);
     opacity: 0.95;
@@ -152,7 +153,7 @@
                     alt="Chicken Dish"
                     width="400"
                     height="400"
-                    style="border-radius: 50%; object-fit: cover;"
+                    loading="lazy"
                   >
                 {%- endif -%}
               </div>
