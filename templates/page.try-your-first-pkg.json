@@ -164,7 +164,7 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "custom_svg": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 8h1a4 4 0 0 1 0 8h-1\"></path><path d=\"M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z\"></path><line x1=\"6\" y1=\"1\" x2=\"6\" y2=\"4\"></line><line x1=\"10\" y1=\"1\" x2=\"10\" y2=\"4\"></line><line x1=\"14\" y1=\"1\" x2=\"14\" y2=\"4\"></line></svg>",
+            "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"28\" height=\"28\" viewbox=\"0 0 28 28\" fill=\"none\">\n<path d=\"M18.6653 2.33301L15.9822 5.01615C15.3409 5.67035 14.9818 6.54991 14.9818 7.46597C14.9818 8.38204 15.3409 9.2616 15.9822 9.9158L18.082 12.0156C18.7362 12.6569 19.6158 13.0161 20.5319 13.0161C21.4479 13.0161 22.3275 12.6569 22.9817 12.0156L25.6648 9.33251\" stroke=\"white\" stroke-width=\"1.86653\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n<path d=\"M17.4988 17.4986L3.84973 3.84961C3.38412 4.30581 3.01423 4.85033 2.76171 5.45127C2.50919 6.05222 2.37912 6.69751 2.37912 7.34936C2.37912 8.00121 2.50919 8.6465 2.76171 9.24745C3.01423 9.84839 3.38412 10.3929 3.84973 10.8491L12.3658 19.3652C13.1824 20.1818 14.699 20.1818 15.6322 19.3652L17.4988 17.4986ZM17.4988 17.4986L25.6648 25.6647\" stroke=\"white\" stroke-width=\"1.86653\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n<path d=\"M2.44983 25.4315L9.91596 18.082\" stroke=\"white\" stroke-width=\"1.86653\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n<path d=\"M22.1651 5.83301L13.999 13.9991\" stroke=\"white\" stroke-width=\"1.86653\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n</svg>",
             "step_number": "",
             "title": "Choose your meals",
             "text": "Choose from 60+ authentic Turkish dishes — changing weekly."
@@ -262,7 +262,7 @@
         "card_gap": 24,
         "fade_width": 100,
         "pause_on_hover": true,
-        "color_scheme": "scheme-4",
+        "color_scheme": "scheme-5f788292-855d-450e-94c9-fdf05b07e86e",
         "accent_color": "#ff007f",
         "padding_top": 64,
         "padding_bottom": 64
