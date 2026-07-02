@@ -348,30 +348,30 @@
           <p class="landing-hero__offer-text">{{ section.settings.hero_offer_text }}</p>
         {%- endif -%}
       </div>
-    </div>
-
-    <div class="landing-hero__features">
-      <div class="landing-hero__features-grid">
-        {%- for block in section.blocks -%}
-          <div class="landing-feature-item" {{ block.shopify_attributes }}>
-            <div class="landing-feature-item__icon">
-              {%- case block.settings.icon -%}
-                {%- when 'shield' -%}
-                  <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                {%- when 'snowflake' -%}
-                  <svg viewBox="0 0 24 24"><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/><path d="M20 16l-4-4 4-4"/><path d="M4 8l4 4-4 4"/><path d="M16 4l-4 4-4-4"/><path d="M8 20l4-4-4 4"/></svg>
-                {%- when 'truck' -%}
-                  <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                {%- when 'clock' -%}
-                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                {%- else -%}
-                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-              {%- endcase -%}
+      
+          <div class="landing-hero__features">
+            <div class="landing-hero__features-grid">
+              {%- for block in section.blocks -%}
+                <div class="landing-feature-item" {{ block.shopify_attributes }}>
+                  <div class="landing-feature-item__icon">
+                    {%- case block.settings.icon -%}
+                      {%- when 'shield' -%}
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                      {%- when 'snowflake' -%}
+                        <svg viewBox="0 0 24 24"><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/><path d="M20 16l-4-4 4-4"/><path d="M4 8l4 4-4 4"/><path d="M16 4l-4 4-4-4"/><path d="M8 20l4-4-4 4"/></svg>
+                      {%- when 'truck' -%}
+                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                      {%- when 'clock' -%}
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      {%- else -%}
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    {%- endcase -%}
+                  </div>
+                  <span>{{ block.settings.title }}</span>
+                </div>
+              {%- endfor -%}
             </div>
-            <span>{{ block.settings.title }}</span>
           </div>
-        {%- endfor -%}
-      </div>
     </div>
   </div>
 </div>
