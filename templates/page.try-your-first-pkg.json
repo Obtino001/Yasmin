@@ -196,6 +196,11 @@
         "caption": "",
         "heading": "You order, we do the rest",
         "text": "From kitchen to door fresh, halal, and on the table within minutes.",
+        "header_alignment": "center",
+        "line_style": "dashed",
+        "line_thickness": 3,
+        "line_color": "#442c6c",
+        "step_alignment": "center",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -274,6 +279,60 @@
         "padding_top": 40,
         "padding_bottom": 64
       }
+    },
+    "try_first_pkg_faq_8pWQ6x": {
+      "type": "try-first-pkg-faq",
+      "blocks": {
+        "faq_ikPqGE": {
+          "type": "faq",
+          "settings": {
+            "question": "What's included in my Yasemin meal package?",
+            "answer": "<p>Each package contains freshly prepared authentic Turkish dishes crafted by our chefs. You can choose from over 60 rotating weekly options.</p>"
+          }
+        },
+        "faq_8PVE9P": {
+          "type": "faq",
+          "settings": {
+            "question": "How fresh are the meals?",
+            "answer": "<p>Our meals are prepared fresh the day before delivery and cooled immediately. They are never frozen and stay fresh in your fridge for up to 5 days.</p>"
+          }
+        },
+        "faq_bxeEUE": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the meals halal?",
+            "answer": "<p>Yes, 100% of our ingredients and meat are strictly certified halal.</p>"
+          }
+        },
+        "faq_yndBq4": {
+          "type": "faq",
+          "settings": {
+            "question": "How long do the meals stay fresh?",
+            "answer": "<p>When stored in the refrigerator upon arrival, our meals stay fresh and delicious for up to 5 days.</p>"
+          }
+        },
+        "faq_ApmyFT": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you deliver throughout the Netherlands?",
+            "answer": "<p>Yes! We deliver across the Netherlands and Belgium with our own fast delivery service, and across Germany by mail.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_ikPqGE",
+        "faq_8PVE9P",
+        "faq_bxeEUE",
+        "faq_yndBq4",
+        "faq_ApmyFT"
+      ],
+      "name": "Custom FAQ",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "background_color": "#ffffff",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
     }
   },
   "order": [
@@ -281,6 +340,7 @@
     "try_first_pkg_menu",
     "how_it_works",
     "testimonials",
-    "bottom_cta"
+    "bottom_cta",
+    "try_first_pkg_faq_8pWQ6x"
   ]
 }
