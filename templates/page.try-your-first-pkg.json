@@ -16,28 +16,28 @@
           "type": "feature",
           "settings": {
             "icon": "shield",
-            "title": "100% Halal certified"
+            "title": "100% Halal gecertificeerd"
           }
         },
         "feature_2": {
           "type": "feature",
           "settings": {
             "icon": "snowflake",
-            "title": "Never frozen"
+            "title": "Nooit ingevroren"
           }
         },
         "feature_3": {
           "type": "feature",
           "settings": {
             "icon": "truck",
-            "title": "Owned Fast delivery service"
+            "title": "Eigen snelle bezorgservice"
           }
         },
         "feature_4": {
           "type": "feature",
           "settings": {
             "icon": "clock",
-            "title": "Fresh daily"
+            "title": "Dagelijks vers"
           }
         }
       },
@@ -50,14 +50,14 @@
       "settings": {
         "color_scheme": "background-1",
         "show_announcement": true,
-        "announcement_text": "Try your first Yasemin package for only €50",
-        "announcement_link_text": "Order now",
+        "announcement_text": "Probeer je eerste Yasemin pakket voor slechts €50",
+        "announcement_link_text": "Bestel nu",
         "announcement_link": "shopify://pages/how-its-work",
         "announcement_bg_color": "#000000",
         "announcement_text_color": "#ffffff",
         "logo_image": "shopify://shop_images/yasemin_logo.webp",
         "logo_width": 140,
-        "header_btn_text": "Order Now",
+        "header_btn_text": "Bestel Nu",
         "header_btn_link": "shopify://pages/how-its-work",
         "header_bg_color": "#ffffff",
         "header_btn_bg": "#231f5c",
@@ -68,12 +68,12 @@
         "mobile_height": 400,
         "overlay_opacity": 45,
         "rating_stars": "★★★★★",
-        "rating_text": "Rated 4.5 / 5 (2000+)",
-        "heading": "Fresh Turkish Meals, Delivered To Your Door",
-        "subheading": "Authentic home-cooked meals ready in minutes",
-        "hero_btn_text": "TRY YOUR FIRST PACKAGE €50",
+        "rating_text": "Beoordeeld met 4.5 / 5 (2000+)",
+        "heading": "Verse Turkse Maaltijden, Thuisbezorgd",
+        "subheading": "Authentieke huisgemaakte maaltijden, klaar in enkele minuten",
+        "hero_btn_text": "PROBEER JE EERSTE PAKKET €50",
         "hero_btn_link": "shopify://pages/how-its-work",
-        "hero_offer_text": "Special First Order Offer",
+        "hero_offer_text": "Speciale Aanbieding Voor Je Eerste Bestelling",
         "hero_btn_bg": "#ffffff",
         "hero_btn_color": "#231f5c",
         "features_bg_color": "#231f5c",
@@ -89,49 +89,49 @@
           "type": "dish",
           "settings": {
             "product": "acem-koftesi",
-            "custom_title": "Chicken Dish"
+            "custom_title": "Kipgerecht"
           }
         },
         "dish_2": {
           "type": "dish",
           "settings": {
             "product": "adana",
-            "custom_title": "Chicken Dish"
+            "custom_title": "Kipgerecht"
           }
         },
         "dish_3": {
           "type": "dish",
           "settings": {
             "product": "antep-tava",
-            "custom_title": "Chicken Dish"
+            "custom_title": "Kipgerecht"
           }
         },
         "dish_4": {
           "type": "dish",
           "settings": {
             "product": "aribasi-corbasi",
-            "custom_title": "Chicken Dish"
+            "custom_title": "Kipgerecht"
           }
         },
         "dish_5": {
           "type": "dish",
           "settings": {
             "product": "aribasi-corbasi",
-            "custom_title": "Chicken Dish"
+            "custom_title": "Kipgerecht"
           }
         },
         "dish_6": {
           "type": "dish",
           "settings": {
             "product": "baharatli-mini-patates",
-            "custom_title": "Chicken Dish"
+            "custom_title": "Kipgerecht"
           }
         },
         "dish_7": {
           "type": "dish",
           "settings": {
             "product": "baharatli-mini-patates",
-            "custom_title": "Chicken Dish"
+            "custom_title": "Kipgerecht"
           }
         }
       },
@@ -145,13 +145,13 @@
         "dish_7"
       ],
       "settings": {
-        "title": "This Week’s Menu",
+        "title": "Menu Van Deze Week",
         "heading_size": "h1",
         "color_scheme": "background-1",
         "show_banner": true,
-        "banner_title": "Ready to skip cooking this week?",
-        "banner_text": "Get Your First Yasemin Package For €50",
-        "button_label": "Order Now",
+        "banner_title": "Klaar om deze week niet te koken?",
+        "banner_text": "Ontvang Je Eerste Yasemin Pakket Voor €50",
+        "button_label": "Bestel Nu",
         "button_link": "#order",
         "banner_color_scheme": "background-2",
         "padding_top": 20,
@@ -166,8 +166,8 @@
           "settings": {
             "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"28\" height=\"28\" viewbox=\"0 0 28 28\" fill=\"none\">\n<path d=\"M18.6653 2.33301L15.9822 5.01615C15.3409 5.67035 14.9818 6.54991 14.9818 7.46597C14.9818 8.38204 15.3409 9.2616 15.9822 9.9158L18.082 12.0156C18.7362 12.6569 19.6158 13.0161 20.5319 13.0161C21.4479 13.0161 22.3275 12.6569 22.9817 12.0156L25.6648 9.33251\" stroke=\"white\" stroke-width=\"1.86653\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n<path d=\"M17.4988 17.4986L3.84973 3.84961C3.38412 4.30581 3.01423 4.85033 2.76171 5.45127C2.50919 6.05222 2.37912 6.69751 2.37912 7.34936C2.37912 8.00121 2.50919 8.6465 2.76171 9.24745C3.01423 9.84839 3.38412 10.3929 3.84973 10.8491L12.3658 19.3652C13.1824 20.1818 14.699 20.1818 15.6322 19.3652L17.4988 17.4986ZM17.4988 17.4986L25.6648 25.6647\" stroke=\"white\" stroke-width=\"1.86653\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n<path d=\"M2.44983 25.4315L9.91596 18.082\" stroke=\"white\" stroke-width=\"1.86653\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n<path d=\"M22.1651 5.83301L13.999 13.9991\" stroke=\"white\" stroke-width=\"1.86653\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n</svg>",
             "step_number": "",
-            "title": "Choose your meals",
-            "text": "Choose from 60+ authentic Turkish dishes — changing weekly."
+            "title": "Kies je maaltijden",
+            "text": "Kies uit 60+ authentieke Turkse gerechten — wekelijks wisselend."
           }
         },
         "step_2": {
@@ -175,8 +175,8 @@
           "settings": {
             "custom_svg": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z\"></path><line x1=\"6\" y1=\"17\" x2=\"18\" y2=\"17\"></line></svg>",
             "step_number": "",
-            "title": "We prepare fresh",
-            "text": "Freshly prepared the day before delivery. Never frozen."
+            "title": "Wij bereiden vers",
+            "text": "Vers bereid op de dag voor levering. Nooit ingevroren."
           }
         },
         "step_3": {
@@ -184,8 +184,8 @@
           "settings": {
             "custom_svg": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"3\" width=\"15\" height=\"13\"></rect><polygon points=\"16 8 20 8 23 11 23 16 16 16 16 8\"></polygon><circle cx=\"5.5\" cy=\"18.5\" r=\"2.5\"></circle><circle cx=\"18.5\" cy=\"18.5\" r=\"2.5\"></circle></svg>",
             "step_number": "",
-            "title": "Delivered to you",
-            "text": "Own delivery service in the Netherlands and Belgium. We deliver in Germany by mail. On the table in 5 minutes."
+            "title": "Bij jou bezorgd",
+            "text": "Eigen bezorgservice in Nederland en België. In Duitsland bezorgen we per post. Binnen 5 minuten op tafel."
           }
         }
       },
@@ -197,8 +197,8 @@
       "settings": {
         "background_color": "#ffffff",
         "caption": "",
-        "heading": "You order, we do the rest",
-        "text": "From kitchen to door fresh, halal, and on the table within minutes.",
+        "heading": "Jij bestelt, wij doen de rest",
+        "text": "Van keuken tot deur vers, halal en binnen enkele minuten op tafel.",
         "header_alignment": "center",
         "line_style": "dashed",
         "line_thickness": 3,
@@ -215,35 +215,35 @@
           "type": "review",
           "settings": {
             "author_name": "Ervin T.",
-            "verified_text": "Verified order",
-            "review_text": "\"Finally a service that tastes exactly like my mother's cooking. Karnıyarık was perfect. Highly recommend the subscription!\"",
+            "verified_text": "Geverifieerde bestelling",
+            "review_text": "\"Eindelijk een service die precies zo smaakt als het eten van mijn moeder. De Karnıyarık was perfect. Ik raad het abonnement ten zeerste aan!\"",
             "date": "28.06.2026"
           }
         },
         "review_2": {
           "type": "review",
           "settings": {
-            "author_name": "Ervin T.",
-            "verified_text": "Verified order",
-            "review_text": "\"Finally a service that tastes exactly like my mother's cooking. Karnıyarık was perfect. Highly recommend the subscription!\"",
+            "author_name": "Aylin K.",
+            "verified_text": "Geverifieerde bestelling",
+            "review_text": "\"De Mantı is werkelijk verrukkelijk, alsof ik in Istanbul ben. Zeer verse ingrediënten en enorm makkelijk op te warmen in de avond.\"",
             "date": "28.06.2026"
           }
         },
         "review_3": {
           "type": "review",
           "settings": {
-            "author_name": "Ervin T.",
-            "verified_text": "Verified order",
-            "review_text": "\"Finally a service that tastes exactly like my mother's cooking. Karnıyarık was perfect. Highly recommend the subscription!\"",
+            "author_name": "Johan v. D.",
+            "verified_text": "Geverifieerde bestelling",
+            "review_text": "\"Geweldige authentieke smaak! De Sarma en de Köfte waren heerlijk gekruid. Ik was verrast hoe vers alles bleef tijdens de bezorging.\"",
             "date": "28.06.2026"
           }
         },
         "review_4": {
           "type": "review",
           "settings": {
-            "author_name": "Ervin T.",
-            "verified_text": "Verified order",
-            "review_text": "\"Finally a service that tastes exactly like my mother's cooking. Karnıyarık was perfect. Highly recommend the subscription!\"",
+            "author_name": "Fatma Y.",
+            "verified_text": "Geverifieerde bestelling",
+            "review_text": "\"Onze absolute favoriet voor drukke doordeweekse dagen. De Ali Nazik Kebab was onweerstaanbaar. Dit pakket is de €50 zeker waard!\"",
             "date": "28.06.2026"
           }
         }
@@ -255,10 +255,10 @@
         "review_4"
       ],
       "settings": {
-        "heading": "Loved by customers",
+        "heading": "Geliefd bij klanten",
         "header_alignment": "center",
         "overall_score": "4.8",
-        "overall_text": "Based on 2,500 reviews",
+        "overall_text": "Gebaseerd op 2.500 beoordelingen",
         "marquee_speed": 30,
         "card_gap": 24,
         "fade_width": 100,
@@ -275,36 +275,36 @@
         "faq_kHpV8f": {
           "type": "faq",
           "settings": {
-            "question": "What's included in my Yasemin meal package?",
-            "answer": "<p>Each package contains freshly prepared authentic Turkish dishes crafted by our chefs. You can choose from over 60 rotating weekly options.</p>"
+            "question": "Wat zit er in mijn Yasemin maaltijdpakket?",
+            "answer": "<p>Elk pakket bevat vers bereide, authentieke Turkse gerechten, met liefde gemaakt door onze koks. Je kunt wekelijks kiezen uit meer dan 60 wisselende opties.</p>"
           }
         },
         "faq_H4Cteh": {
           "type": "faq",
           "settings": {
-            "question": "How fresh are the meals?",
-            "answer": "<p>Our meals are prepared fresh the day before delivery and cooled immediately. They are never frozen and stay fresh in your fridge for up to 5 days.</p>"
+            "question": "Hoe vers zijn de maaltijden?",
+            "answer": "<p>Onze maaltijden worden de dag voor levering vers bereid en direct gekoeld. Ze worden nooit ingevroren en blijven tot 5 dagen heerlijk vers in je koelkast.</p>"
           }
         },
         "faq_ewyMm8": {
           "type": "faq",
           "settings": {
-            "question": "Are the meals halal?",
-            "answer": "<p>Yes, 100% of our ingredients and meat are strictly certified halal.</p>"
+            "question": "Zijn de maaltijden halal?",
+            "answer": "<p>Ja, 100% van onze ingrediënten en het vlees zijn strikt halal gecertificeerd.</p>"
           }
         },
         "faq_BCnQqt": {
           "type": "faq",
           "settings": {
-            "question": "How long do the meals stay fresh?",
-            "answer": "<p>When stored in the refrigerator upon arrival, our meals stay fresh and delicious for up to 5 days.</p>"
+            "question": "Hoe lang blijven de maaltijden goed?",
+            "answer": "<p>Wanneer je ze bij aankomst direct in de koelkast bewaart, blijven onze maaltijden tot 5 dagen vers en smaakvol.</p>"
           }
         },
         "faq_dGJ7NH": {
           "type": "faq",
           "settings": {
-            "question": "Do you deliver throughout the Netherlands?",
-            "answer": "<p>Yes! We deliver across the Netherlands and Belgium with our own fast delivery service, and across Germany by mail.</p>"
+            "question": "Bezorgen jullie overal in Nederland?",
+            "answer": "<p>Zeker! We bezorgen in heel Nederland en België met onze eigen snelle bezorgservice. Naar Duitsland verzenden we de pakketten per post.</p>"
           }
         }
       },
@@ -317,7 +317,7 @@
       ],
       "name": "Custom FAQ",
       "settings": {
-        "title": "Frequently Asked Questions",
+        "title": "Veelgestelde Vragen",
         "background_color": "#ffffff",
         "floating_image": "shopify://shop_images/e27ded7b3d89a0bd9e7529956f1124457a1c8686.png",
         "padding_top": 64,
@@ -329,9 +329,9 @@
       "settings": {
         "color_scheme": "background-1",
         "box_bg_color": "#f6f5f0",
-        "heading": "Start Enjoying Homemade Turkish Meals Today",
-        "subheading": "FIRST PACKAGE €50",
-        "button_label": "CLAIM MY OFFER",
+        "heading": "Geniet Vandaag Nog Van Huisgemaakte Turkse Maaltijden",
+        "subheading": "EERSTE PAKKET €50",
+        "button_label": "CLAIM MIJN AANBIEDING",
         "button_link": "#order",
         "button_bg_color": "#231f5c",
         "button_text_color": "#ffffff",
