@@ -280,6 +280,11 @@
         "type": "shopify://apps/vitals/blocks/app-embed/aeb48102-2a5a-4f39-bdbd-d8d49f4e20b8",
         "disabled": false,
         "settings": {}
+      },
+      "341186785192672687": {
+        "type": "shopify://apps/seal-subscriptions/blocks/subscription-script-append/13b25004-a140-4ab7-b5fe-29918f759699",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
@@ -362,7 +367,7 @@
       },
       "scheme-5f788292-855d-450e-94c9-fdf05b07e86e": {
         "settings": {
-          "background": "#E6E2EE",
+          "background": "#e6e2ee",
           "background_gradient": "",
           "text": "#472a6b",
           "button": "#553482",
