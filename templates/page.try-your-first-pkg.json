@@ -89,49 +89,56 @@
           "type": "dish",
           "settings": {
             "product": "acem-koftesi",
-            "custom_title": "Kipgerecht"
+            "custom_title": "Kipgerecht",
+            "custom_ingredients": ""
           }
         },
         "dish_2": {
           "type": "dish",
           "settings": {
             "product": "adana",
-            "custom_title": "Kipgerecht"
+            "custom_title": "Kipgerecht",
+            "custom_ingredients": ""
           }
         },
         "dish_3": {
           "type": "dish",
           "settings": {
             "product": "antep-tava",
-            "custom_title": "Kipgerecht"
+            "custom_title": "Kipgerecht",
+            "custom_ingredients": ""
           }
         },
         "dish_4": {
           "type": "dish",
           "settings": {
             "product": "aribasi-corbasi",
-            "custom_title": "Kipgerecht"
+            "custom_title": "Kipgerecht",
+            "custom_ingredients": ""
           }
         },
         "dish_5": {
           "type": "dish",
           "settings": {
             "product": "aribasi-corbasi",
-            "custom_title": "Kipgerecht"
+            "custom_title": "Kipgerecht",
+            "custom_ingredients": ""
           }
         },
         "dish_6": {
           "type": "dish",
           "settings": {
             "product": "baharatli-mini-patates",
-            "custom_title": "Kipgerecht"
+            "custom_title": "Kipgerecht",
+            "custom_ingredients": ""
           }
         },
         "dish_7": {
           "type": "dish",
           "settings": {
             "product": "baharatli-tereyagli-mantar",
-            "custom_title": "Kipgerecht"
+            "custom_title": "Kipgerecht",
+            "custom_ingredients": ""
           }
         }
       },
