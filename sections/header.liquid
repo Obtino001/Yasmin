@@ -409,7 +409,11 @@
       </div>
 
       <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__sign-in">
-        {{ 'sections.header.sign_in' | t | default: section.settings.sign_in_label }}
+        {%- if customer -%}
+          {{ 'customer.account_fallback' | t }}
+        {%- else -%}
+          {{ 'sections.header.sign_in' | t | default: section.settings.sign_in_label }}
+        {%- endif -%}
       </a>
 
       <a href="{{ routes.cart_url }}" class="header__order-now" id="cart-icon-bubble">
