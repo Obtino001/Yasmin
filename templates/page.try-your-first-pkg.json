@@ -58,7 +58,7 @@
         "logo_image": "shopify://shop_images/yasemin_logo.webp",
         "logo_width": 140,
         "header_btn_text": "Bestel Nu",
-        "header_btn_link": "shopify://pages/how-its-work",
+        "header_btn_link": "https://yaseminmeals.com/collections/all",
         "header_bg_color": "#ffffff",
         "header_btn_bg": "#231f5c",
         "header_btn_color": "#ffffff",
