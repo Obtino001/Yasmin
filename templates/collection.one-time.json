@@ -119,7 +119,7 @@
         "pc_button_text": "Check →",
         "pc_error_text": "Voer een geldige postcode in",
         "pc_footer_label": "Wij bezorgen in:",
-        "max_days_ahead": 6,
+        "max_days_ahead": 10,
         "restrict_next_week_until_wednesday": true,
         "padding_top": 36,
         "padding_bottom": 0
