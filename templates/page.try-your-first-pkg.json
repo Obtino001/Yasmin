@@ -50,7 +50,7 @@
       "settings": {
         "color_scheme": "background-1",
         "show_announcement": true,
-        "announcement_text": "Probeer je eerste Yasemin pakket voor slechts €50",
+        "announcement_text": "Probeer je eerste Yasemin pakket",
         "announcement_link_text": "Bestel nu",
         "announcement_link": "https://yaseminmeals.com/collections/all",
         "announcement_bg_color": "#000000",
@@ -72,7 +72,7 @@
         "heading": "Verse Turkse Maaltijden, Thuisbezorgd",
         "subheading": "Authentieke huisgemaakte maaltijden, klaar in enkele minuten",
         "hero_btn_text": "PROBEER JE EERSTE PAKKET €50",
-        "hero_btn_link": "https://yaseminmeals.com/collections/all",
+        "hero_btn_link": "shopify://pages/how-its-work",
         "hero_offer_text": "Speciale Aanbieding Voor Je Eerste Bestelling",
         "hero_btn_bg": "#ffffff",
         "hero_btn_color": "#231f5c",
@@ -157,7 +157,7 @@
         "color_scheme": "background-1",
         "show_banner": true,
         "banner_title": "Klaar om deze week niet te koken?",
-        "banner_text": "Ontvang Je Eerste Yasemin Pakket Voor €50",
+        "banner_text": "Gebruik welkom10 voor 10% korting op de eerste bestelling",
         "button_label": "Bestel Nu",
         "button_link": "https://yaseminmeals.com/collections/all",
         "banner_color_scheme": "background-2",
@@ -250,7 +250,7 @@
           "settings": {
             "author_name": "Fatma Y.",
             "verified_text": "Geverifieerde bestelling",
-            "review_text": "\"Onze absolute favoriet voor drukke doordeweekse dagen. De Ali Nazik Kebab was onweerstaanbaar. Dit pakket is de €50 zeker waard!\"",
+            "review_text": "\"Onze absolute favoriet voor drukke doordeweekse dagen. De Ali Nazik Kebab was onweerstaanbaar. Dit pakket is het zeker waard!\"",
             "date": "28.06.2026"
           }
         }
@@ -337,7 +337,7 @@
         "color_scheme": "background-1",
         "box_bg_color": "#f6f5f0",
         "heading": "Geniet Vandaag Nog Van Huisgemaakte Turkse Maaltijden",
-        "subheading": "EERSTE PAKKET €50",
+        "subheading": "EERSTE PAKKET",
         "button_label": "CLAIM MIJN AANBIEDING",
         "button_link": "https://yaseminmeals.com/collections/all",
         "button_bg_color": "#231f5c",
