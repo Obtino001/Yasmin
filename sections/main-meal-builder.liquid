@@ -1587,30 +1587,13 @@ label.mb-sub-card {
       }
 
       recalculateDiscounts() {
-        // Badge rates (display). Checkout uses whole-% codes — Shopify has no decimals.
-        const durDiscounts = {1: 0, 4: 0.07, 12: 0.20, 24: 0.25};
+        // Match yasmin-live + "Week menu korting" (People Quantity Discount) extension:
+        // ADDITIVE on full subtotal (not stacked). Multi-week commitment is flat 7%.
+        // People: 2→15%, 3→20%, 4→30%. Cart total = people% + duration% (e.g. 4p+4w = 37%).
         const pDiscounts = {1: 0, 2: 0.15, 3: 0.20, 4: 0.30};
-        this.state.durationDiscount = durDiscounts[this.state.duration] || 0;
         this.state.peopleDiscount = pDiscounts[this.state.people] || 0;
-
-        // Single effective rate matching the discount code applied at checkout
-        // (stacked combos rounded to whole % because Shopify %).
-        const stackedRates = {
-          '4_2': 0.21, '4_3': 0.26, '4_4': 0.35,
-          '12_2': 0.32, '12_3': 0.36, '12_4': 0.44,
-          '24_2': 0.36, '24_3': 0.40, '24_4': 0.48
-        };
-        const weeks = this.state.duration;
-        const people = this.state.people;
-        if (people > 1 && weeks > 1) {
-          this.state.effectiveDiscount = stackedRates[`${weeks}_${people}`] || 0;
-        } else if (people > 1) {
-          this.state.effectiveDiscount = pDiscounts[people] || 0;
-        } else if (weeks > 1) {
-          this.state.effectiveDiscount = durDiscounts[weeks] || 0;
-        } else {
-          this.state.effectiveDiscount = 0;
-        }
+        this.state.durationDiscount = this.state.duration > 1 ? 0.07 : 0;
+        this.state.effectiveDiscount = this.state.peopleDiscount + this.state.durationDiscount;
       }
 
       resolvePlanId(durationWeeks, daysCount, productId = null) {
@@ -2319,60 +2302,18 @@ label.mb-sub-card {
           itemsToAdd.push(item);
         });
 
-        // Shopify on this store only keeps ONE discount code (second never stacks).
-        // So when people + weeks both apply, use a single stacked combo code.
-        //
-        // Create these as Amount off products (or order), ONE code each:
-        // Weeks only (1 person): 4WEEKS_PLAN 7% | 12WEEKS_PLAN 20% | 24WEEKS_PLAN 25%
-        // People only (1 week):  PEOPLE_2 15% | PEOPLE_3 20% | PEOPLE_4 30%
-        // Both (stacked %):      4W_2P 21% | 4W_3P 26% | 4W_4P 35%
-        //                        12W_2P 32% | 12W_3P 36% | 12W_4P 44%
-        //                        24W_2P 36% | 24W_3P 40% | 24W_4P 48%
-        // Seal selling-plan product discount must be 0% (codes handle the %).
-        const resolveDiscountCode = (weeks, people) => {
-          const weekOnly = { 4: '4WEEKS_PLAN', 12: '12WEEKS_PLAN', 24: '24WEEKS_PLAN' };
-          const peopleOnly = { 2: 'PEOPLE_2', 3: 'PEOPLE_3', 4: 'PEOPLE_4' };
-          const stacked = {
-            '4_2': '4W_2P', '4_3': '4W_3P', '4_4': '4W_4P',
-            '12_2': '12W_2P', '12_3': '12W_3P', '12_4': '12W_4P',
-            '24_2': '24W_2P', '24_3': '24W_3P', '24_4': '24W_4P'
-          };
-          if (people > 1 && weeks > 1) return stacked[`${weeks}_${people}`] || '';
-          if (people > 1) return peopleOnly[people] || '';
-          if (weeks > 1) return weekOnly[weeks] || '';
-          return '';
-        };
-        const discountCode = resolveDiscountCode(this.state.duration, this.state.people);
-
+        // Like yasmin-live: do NOT apply discount codes.
+        // Checkout pricing comes from automatic "Week menu korting"
+        // (yasemin-extensions People Quantity Discount). Clear any stuck codes only.
         const hasCartDrawer = !!document.querySelector('cart-drawer');
         const sectionIds = hasCartDrawer ? 'cart-drawer,cart-icon-bubble' : undefined;
 
-        const applyDiscount = (code) => {
-          const body = { discount: code };
-          if (sectionIds) {
-            body.sections = sectionIds;
-            body.sections_url = window.location.pathname;
-          }
+        const clearDiscountCodes = () => {
           return fetch(window.Shopify.routes.root + 'cart/update.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-          }).then((res) => (res.ok ? res.json() : null));
-        };
-
-        const applyDiscountViaUrl = (code) => {
-          return fetch(window.Shopify.routes.root + 'discount/' + encodeURIComponent(code), {
-            credentials: 'same-origin'
+            body: JSON.stringify({ discount: '' })
           }).catch(() => null);
-        };
-
-        const refreshCartSections = () => {
-          if (!sectionIds) return Promise.resolve(null);
-          return fetch(
-            window.Shopify.routes.root + 'cart?sections=' + encodeURIComponent(sectionIds)
-          )
-            .then((res) => (res.ok ? res.json() : null))
-            .then((sections) => (sections ? { sections } : null));
         };
 
         const finishUi = (parsedState) => {
@@ -2403,8 +2344,7 @@ label.mb-sub-card {
           if (picker.deliveryZone) cartAttributes['Delivery Zone'] = picker.deliveryZone.zoneId;
         }
 
-        applyDiscount('')
-          .catch(() => null)
+        clearDiscountCodes()
           .then(() => {
             return fetch(window.Shopify.routes.root + 'cart/add.js', {
               method: 'POST',
@@ -2421,22 +2361,7 @@ label.mb-sub-card {
             if (!response || !response.ok) throw new Error('Error adding to cart');
             return response.json();
           })
-          .then(async (parsedState) => {
-            if (!discountCode) {
-              finishUi(parsedState);
-              return;
-            }
-
-            let discountState = await applyDiscount(discountCode).catch(() => null);
-            if (!discountState) {
-              await applyDiscountViaUrl(discountCode);
-              discountState = await refreshCartSections();
-            } else if (!discountState.sections) {
-              discountState = await refreshCartSections();
-            }
-
-            finishUi(discountState && discountState.sections ? discountState : parsedState);
-          })
+          .then((parsedState) => finishUi(parsedState))
           .catch((error) => {
             console.error('Cart error:', error);
             const errorTextMsg = this.dataset.errorText || 'Error — try again';

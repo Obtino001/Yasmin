@@ -1554,45 +1554,12 @@ pick-and-mix-error {
           });
           if (!updateResponse.ok) throw new Error("Cart attributes update failed.");
 
-          // One code only — Shopify won't stack two codes on this store.
-          const resolveDiscountCode = (weeks, people) => {
-            const weekOnly = { 4: '4WEEKS_PLAN', 12: '12WEEKS_PLAN', 24: '24WEEKS_PLAN' };
-            const peopleOnly = { 2: 'PEOPLE_2', 3: 'PEOPLE_3', 4: 'PEOPLE_4' };
-            const stacked = {
-              '4_2': '4W_2P', '4_3': '4W_3P', '4_4': '4W_4P',
-              '12_2': '12W_2P', '12_3': '12W_3P', '12_4': '12W_4P',
-              '24_2': '24W_2P', '24_3': '24W_3P', '24_4': '24W_4P'
-            };
-            if (people > 1 && weeks > 1) return stacked[`${weeks}_${people}`] || '';
-            if (people > 1) return peopleOnly[people] || '';
-            if (weeks > 1) return weekOnly[weeks] || '';
-            return '';
-          };
-          const people = parseInt(this.state.people, 10) || 1;
-          let weeks = 1;
-          const durStr = String(this.state.duration).toLowerCase();
-          if (durStr.includes('24')) weeks = 24;
-          else if (durStr.includes('12')) weeks = 12;
-          else if (durStr.includes('4')) weeks = 4;
-          const discountCode = resolveDiscountCode(weeks, people);
-
-          const applyDiscount = (code) => {
-            return fetch(window.Shopify.routes.root + 'cart/update.js', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ discount: code })
-            });
-          };
-
-          await applyDiscount('').catch(() => {});
-
-          if (discountCode) {
-            await applyDiscount(discountCode).catch(async () => {
-              await fetch(window.Shopify.routes.root + 'discount/' + encodeURIComponent(discountCode), {
-                credentials: 'same-origin'
-              }).catch(() => {});
-            });
-          }
+          // Like yasmin-live: no discount codes — automatic "Week menu korting" handles price.
+          await fetch(window.Shopify.routes.root + 'cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ discount: '' })
+          }).catch(() => {});
 
           window.location.href = '/checkout';
 
