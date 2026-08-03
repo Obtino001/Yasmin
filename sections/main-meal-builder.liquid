@@ -2289,18 +2289,30 @@ label.mb-sub-card {
           itemsToAdd.push(item);
         });
 
-        // Week codes (existing) + people codes. Applied AFTER items are in cart.
-        // 4WEEKS_PLAN 7% | 12WEEKS_PLAN 20% | 24WEEKS_PLAN 25%
-        // PEOPLE_2 15% | PEOPLE_3 20% | PEOPLE_4 30%
-        // NOTE: If Seal selling plans ALSO have a % discount, you get double weeks
-        // discount. Set Seal product discount to 0% and let 12/24WEEKS_PLAN handle weeks,
-        // OR set Seal to 25%/20%/7% and only use PEOPLE_* codes (not both).
-        const weekCodes = { 4: '4WEEKS_PLAN', 12: '12WEEKS_PLAN', 24: '24WEEKS_PLAN' };
-        const peopleCodes = { 2: 'PEOPLE_2', 3: 'PEOPLE_3', 4: 'PEOPLE_4' };
-        const codesToApply = [
-          weekCodes[this.state.duration],
-          peopleCodes[this.state.people]
-        ].filter(Boolean);
+        // Shopify on this store only keeps ONE discount code (second never stacks).
+        // So when people + weeks both apply, use a single stacked combo code.
+        //
+        // Create these as Amount off products (or order), ONE code each:
+        // Weeks only (1 person): 4WEEKS_PLAN 7% | 12WEEKS_PLAN 20% | 24WEEKS_PLAN 25%
+        // People only (1 week):  PEOPLE_2 15% | PEOPLE_3 20% | PEOPLE_4 30%
+        // Both (stacked %):      4W_2P 21% | 4W_3P 26% | 4W_4P 35%
+        //                        12W_2P 32% | 12W_3P 36% | 12W_4P 44%
+        //                        24W_2P 36% | 24W_3P 40% | 24W_4P 48%
+        // Seal selling-plan product discount must be 0% (codes handle the %).
+        const resolveDiscountCode = (weeks, people) => {
+          const weekOnly = { 4: '4WEEKS_PLAN', 12: '12WEEKS_PLAN', 24: '24WEEKS_PLAN' };
+          const peopleOnly = { 2: 'PEOPLE_2', 3: 'PEOPLE_3', 4: 'PEOPLE_4' };
+          const stacked = {
+            '4_2': '4W_2P', '4_3': '4W_3P', '4_4': '4W_4P',
+            '12_2': '12W_2P', '12_3': '12W_3P', '12_4': '12W_4P',
+            '24_2': '24W_2P', '24_3': '24W_3P', '24_4': '24W_4P'
+          };
+          if (people > 1 && weeks > 1) return stacked[`${weeks}_${people}`] || '';
+          if (people > 1) return peopleOnly[people] || '';
+          if (weeks > 1) return weekOnly[weeks] || '';
+          return '';
+        };
+        const discountCode = resolveDiscountCode(this.state.duration, this.state.people);
 
         const hasCartDrawer = !!document.querySelector('cart-drawer');
         const sectionIds = hasCartDrawer ? 'cart-drawer,cart-icon-bubble' : undefined;
@@ -2318,7 +2330,6 @@ label.mb-sub-card {
           }).then((res) => (res.ok ? res.json() : null));
         };
 
-        // Fallback that works when cart/update.js ignores discount on some stores
         const applyDiscountViaUrl = (code) => {
           return fetch(window.Shopify.routes.root + 'discount/' + encodeURIComponent(code), {
             credentials: 'same-origin'
@@ -2381,21 +2392,14 @@ label.mb-sub-card {
             return response.json();
           })
           .then(async (parsedState) => {
-            if (codesToApply.length === 0) {
+            if (!discountCode) {
               finishUi(parsedState);
               return;
             }
 
-            // Prefer multi-code in one call (store must allow combining codes)
-            const combined = codesToApply.join(',');
-            let discountState = await applyDiscount(combined).catch(() => null);
-
-            // If multi failed, apply one-by-one + URL fallback
+            let discountState = await applyDiscount(discountCode).catch(() => null);
             if (!discountState) {
-              for (const code of codesToApply) {
-                await applyDiscount(code).catch(() => null);
-                await applyDiscountViaUrl(code);
-              }
+              await applyDiscountViaUrl(discountCode);
               discountState = await refreshCartSections();
             } else if (!discountState.sections) {
               discountState = await refreshCartSections();
