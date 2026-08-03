@@ -2271,7 +2271,9 @@ label.mb-sub-card {
             id: targetVariantId,
             quantity: box.qty,
             properties: {
-              'Week': box.week.toString()
+              'Week': box.week.toString(),
+              'People': this.state.people.toString(),
+              'Duration': this.state.duration.toString()
             }
           };
           
@@ -2289,7 +2291,10 @@ label.mb-sub-card {
 
         const addItemsToCart = () => {
           const picker = document.querySelector('delivery-picker');
-          const cartAttributes = {};
+          const cartAttributes = {
+            'People': this.state.people.toString(),
+            'Duration Weeks': this.state.duration.toString()
+          };
           if (picker) {
              if (picker.deliveryDate) cartAttributes['Delivery Date'] = picker.deliveryDate;
              if (picker.deliveryDay) cartAttributes['Delivery Day'] = picker.deliveryDay;
@@ -2334,10 +2339,12 @@ label.mb-sub-card {
           });
         };
 
-        let discountCode = '';
-        if (this.state.duration === 4) discountCode = '4WEEKS_PLAN';
-        if (this.state.duration === 12) discountCode = '12WEEKS_PLAN';
-        if (this.state.duration === 24) discountCode = '24WEEKS_PLAN';
+        // Only 3 people codes — duration discount stays on Seal selling plans.
+        // Create in Shopify: PEOPLE_2 = 15%, PEOPLE_3 = 20%, PEOPLE_4 = 30%.
+        // Seal plan % must match UI: 4w=7%, 12w=20%, 24w=25% (set product discount there).
+        // Enable "combine with product discounts" on these codes.
+        const peopleCodes = { 2: 'PEOPLE_2', 3: 'PEOPLE_3', 4: 'PEOPLE_4' };
+        const discountCode = peopleCodes[this.state.people] || '';
 
         const applyDiscount = (code) => {
           return fetch(window.Shopify.routes.root + 'cart/update.js', {
@@ -2347,7 +2354,6 @@ label.mb-sub-card {
           });
         };
 
-        // Official Shopify AJAX API to clear any stuck discount
         applyDiscount('').then(() => {
            if (discountCode) {
               applyDiscount(discountCode).then(() => addItemsToCart()).catch(() => addItemsToCart());
@@ -2355,7 +2361,6 @@ label.mb-sub-card {
               addItemsToCart();
            }
         }).catch(() => {
-           // Fallback in case clear fails
            if (discountCode) {
               applyDiscount(discountCode).then(() => addItemsToCart()).catch(() => addItemsToCart());
            } else {

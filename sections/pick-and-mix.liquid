@@ -1554,11 +1554,10 @@ pick-and-mix-error {
           });
           if (!updateResponse.ok) throw new Error("Cart attributes update failed.");
 
-          let discountCode = '';
-          const durStr = String(this.state.duration).toLowerCase();
-          if (durStr.includes('4')) discountCode = '4WEEKS_PLAN';
-          if (durStr.includes('12')) discountCode = '12WEEKS_PLAN';
-          if (durStr.includes('24')) discountCode = '24WEEKS_PLAN';
+          // Only 3 people codes — duration from Seal selling plans.
+          const peopleCodes = { 2: 'PEOPLE_2', 3: 'PEOPLE_3', 4: 'PEOPLE_4' };
+          const people = parseInt(this.state.people, 10) || 1;
+          const discountCode = peopleCodes[people] || '';
 
           const applyDiscount = (code) => {
             return fetch(window.Shopify.routes.root + 'cart/update.js', {
@@ -1568,7 +1567,6 @@ pick-and-mix-error {
             });
           };
 
-          // Official Shopify AJAX API to clear any stuck discount
           await applyDiscount('').catch(() => {});
 
           if (discountCode) {
