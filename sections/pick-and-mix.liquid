@@ -1554,10 +1554,16 @@ pick-and-mix-error {
           });
           if (!updateResponse.ok) throw new Error("Cart attributes update failed.");
 
-          // Only 3 people codes — duration from Seal selling plans.
+          // Week codes + people codes (same as meal builder)
+          const weekCodes = { 4: '4WEEKS_PLAN', 12: '12WEEKS_PLAN', 24: '24WEEKS_PLAN' };
           const peopleCodes = { 2: 'PEOPLE_2', 3: 'PEOPLE_3', 4: 'PEOPLE_4' };
           const people = parseInt(this.state.people, 10) || 1;
-          const discountCode = peopleCodes[people] || '';
+          let weeks = 1;
+          const durStr = String(this.state.duration).toLowerCase();
+          if (durStr.includes('24')) weeks = 24;
+          else if (durStr.includes('12')) weeks = 12;
+          else if (durStr.includes('4')) weeks = 4;
+          const codesToApply = [weekCodes[weeks], peopleCodes[people]].filter(Boolean);
 
           const applyDiscount = (code) => {
             return fetch(window.Shopify.routes.root + 'cart/update.js', {
@@ -1569,8 +1575,15 @@ pick-and-mix-error {
 
           await applyDiscount('').catch(() => {});
 
-          if (discountCode) {
-             await applyDiscount(discountCode).catch(() => {});
+          if (codesToApply.length) {
+            await applyDiscount(codesToApply.join(',')).catch(async () => {
+              for (const code of codesToApply) {
+                await applyDiscount(code).catch(() => {});
+                await fetch(window.Shopify.routes.root + 'discount/' + encodeURIComponent(code), {
+                  credentials: 'same-origin'
+                }).catch(() => {});
+              }
+            });
           }
 
           window.location.href = '/checkout';

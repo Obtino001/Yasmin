@@ -2289,8 +2289,19 @@ label.mb-sub-card {
           itemsToAdd.push(item);
         });
 
+        // Week codes (existing) + people codes. Applied AFTER items are in cart.
+        // 4WEEKS_PLAN 7% | 12WEEKS_PLAN 20% | 24WEEKS_PLAN 25%
+        // PEOPLE_2 15% | PEOPLE_3 20% | PEOPLE_4 30%
+        // NOTE: If Seal selling plans ALSO have a % discount, you get double weeks
+        // discount. Set Seal product discount to 0% and let 12/24WEEKS_PLAN handle weeks,
+        // OR set Seal to 25%/20%/7% and only use PEOPLE_* codes (not both).
+        const weekCodes = { 4: '4WEEKS_PLAN', 12: '12WEEKS_PLAN', 24: '24WEEKS_PLAN' };
         const peopleCodes = { 2: 'PEOPLE_2', 3: 'PEOPLE_3', 4: 'PEOPLE_4' };
-        const discountCode = peopleCodes[this.state.people] || '';
+        const codesToApply = [
+          weekCodes[this.state.duration],
+          peopleCodes[this.state.people]
+        ].filter(Boolean);
+
         const hasCartDrawer = !!document.querySelector('cart-drawer');
         const sectionIds = hasCartDrawer ? 'cart-drawer,cart-icon-bubble' : undefined;
 
@@ -2305,6 +2316,22 @@ label.mb-sub-card {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
           }).then((res) => (res.ok ? res.json() : null));
+        };
+
+        // Fallback that works when cart/update.js ignores discount on some stores
+        const applyDiscountViaUrl = (code) => {
+          return fetch(window.Shopify.routes.root + 'discount/' + encodeURIComponent(code), {
+            credentials: 'same-origin'
+          }).catch(() => null);
+        };
+
+        const refreshCartSections = () => {
+          if (!sectionIds) return Promise.resolve(null);
+          return fetch(
+            window.Shopify.routes.root + 'cart?sections=' + encodeURIComponent(sectionIds)
+          )
+            .then((res) => (res.ok ? res.json() : null))
+            .then((sections) => (sections ? { sections } : null));
         };
 
         const finishUi = (parsedState) => {
@@ -2335,7 +2362,6 @@ label.mb-sub-card {
           if (picker.deliveryZone) cartAttributes['Delivery Zone'] = picker.deliveryZone.zoneId;
         }
 
-        // 1) Clear stuck code → 2) add items → 3) apply people code (must be after items exist)
         applyDiscount('')
           .catch(() => null)
           .then(() => {
@@ -2354,17 +2380,28 @@ label.mb-sub-card {
             if (!response || !response.ok) throw new Error('Error adding to cart');
             return response.json();
           })
-          .then((parsedState) => {
-            if (!discountCode) {
+          .then(async (parsedState) => {
+            if (codesToApply.length === 0) {
               finishUi(parsedState);
               return;
             }
-            return applyDiscount(discountCode)
-              .then((discountState) => {
-                // Prefer drawer HTML after discount so PEOPLE_X shows in totals
-                finishUi(discountState && discountState.sections ? discountState : parsedState);
-              })
-              .catch(() => finishUi(parsedState));
+
+            // Prefer multi-code in one call (store must allow combining codes)
+            const combined = codesToApply.join(',');
+            let discountState = await applyDiscount(combined).catch(() => null);
+
+            // If multi failed, apply one-by-one + URL fallback
+            if (!discountState) {
+              for (const code of codesToApply) {
+                await applyDiscount(code).catch(() => null);
+                await applyDiscountViaUrl(code);
+              }
+              discountState = await refreshCartSections();
+            } else if (!discountState.sections) {
+              discountState = await refreshCartSections();
+            }
+
+            finishUi(discountState && discountState.sections ? discountState : parsedState);
           })
           .catch((error) => {
             console.error('Cart error:', error);
