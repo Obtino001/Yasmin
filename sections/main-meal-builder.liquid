@@ -1357,6 +1357,7 @@ label.mb-sub-card {
           boxes: {}, 
           peopleDiscount: 0,
           durationDiscount: 0,
+          effectiveDiscount: 0,
           total: 0,
           planId: null,
           boxType: 'chefs',
@@ -1586,11 +1587,30 @@ label.mb-sub-card {
       }
 
       recalculateDiscounts() {
+        // Badge rates (display). Checkout uses whole-% codes — Shopify has no decimals.
         const durDiscounts = {1: 0, 4: 0.07, 12: 0.20, 24: 0.25};
-        this.state.durationDiscount = durDiscounts[this.state.duration] || 0;
-
         const pDiscounts = {1: 0, 2: 0.15, 3: 0.20, 4: 0.30};
+        this.state.durationDiscount = durDiscounts[this.state.duration] || 0;
         this.state.peopleDiscount = pDiscounts[this.state.people] || 0;
+
+        // Single effective rate matching the discount code applied at checkout
+        // (stacked combos rounded to whole % because Shopify %).
+        const stackedRates = {
+          '4_2': 0.21, '4_3': 0.26, '4_4': 0.35,
+          '12_2': 0.32, '12_3': 0.36, '12_4': 0.44,
+          '24_2': 0.36, '24_3': 0.40, '24_4': 0.48
+        };
+        const weeks = this.state.duration;
+        const people = this.state.people;
+        if (people > 1 && weeks > 1) {
+          this.state.effectiveDiscount = stackedRates[`${weeks}_${people}`] || 0;
+        } else if (people > 1) {
+          this.state.effectiveDiscount = pDiscounts[people] || 0;
+        } else if (weeks > 1) {
+          this.state.effectiveDiscount = durDiscounts[weeks] || 0;
+        } else {
+          this.state.effectiveDiscount = 0;
+        }
       }
 
       resolvePlanId(durationWeeks, daysCount, productId = null) {
@@ -2144,11 +2164,21 @@ label.mb-sub-card {
           });
         }
 
-        const durationDiscAmount = baseBoxTotal * this.state.durationDiscount;
-        const discountedBase = baseBoxTotal - durationDiscAmount;
-        const peopleDiscAmount = discountedBase * this.state.peopleDiscount;
-        const totalDiscountAmount = peopleDiscAmount + durationDiscAmount;
+        // Total uses same whole-% rate as the Shopify discount code (no decimal %).
+        const totalDiscountAmount = baseBoxTotal * (this.state.effectiveDiscount || 0);
         this.state.total = baseBoxTotal - totalDiscountAmount;
+
+        // Split for summary rows so weeks + people lines add up to that total.
+        let durationDiscAmount = 0;
+        let peopleDiscAmount = 0;
+        if (this.state.durationDiscount > 0 && this.state.peopleDiscount > 0) {
+          durationDiscAmount = baseBoxTotal * this.state.durationDiscount;
+          peopleDiscAmount = Math.max(0, totalDiscountAmount - durationDiscAmount);
+        } else if (this.state.durationDiscount > 0) {
+          durationDiscAmount = totalDiscountAmount;
+        } else if (this.state.peopleDiscount > 0) {
+          peopleDiscAmount = totalDiscountAmount;
+        }
 
         const sumDiscPeopleRow = this.querySelector('#sum-discount-people-row');
         const sumDiscPeople = this.querySelector('#sum-discount-people');
